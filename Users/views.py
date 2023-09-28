@@ -7,10 +7,13 @@ from django import forms
 
 def login(request):
     # Lógica de la vista
-    return render(request, 'registration/login.html')
-
+    return render(request, 'index')
 
 def index(request):
+    # Lógica de la vista
+    return render(request, 'index.html')
+
+def register(request):
     # Lógica de la vista
     return render(request, 'index.html')
 
