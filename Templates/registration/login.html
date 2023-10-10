@@ -1,0 +1,51 @@
+
+<!-- app_name/templates/login.html -->
+{% extends 'layout.html' %}
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<body>
+    <div class="form-box">
+        <div class="header-text">
+            Iniciar sesión
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            
+            <div>
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            
+            <div>
+                {{ form.remember_me }}
+                <label for="{{ form.remember_me.id_for_label }}">Recuérdame</label>
+            </div>
+
+            <button type="submit" style="background-color: #007bff; color: #ffffff;">Iniciar sesión</button>
+
+        <div class="separator"></div>
+
+        <button type="button" onclick="window.location.href='/registro'" style="background-color: #008000; color: #ffffff;">Crear cuenta</button>
+
+            {% if messages %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+        </form>
+    </div>
+</body>
+{% endblock %}
+
+
