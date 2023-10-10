@@ -1,0 +1,20 @@
+
+<!-- app_name/templates/login.html -->
+{% extends 'layout.html' %}
+{% block title %} GroupArt {% endblock %}
+
+{% block content %}
+<body>
+    <div class="form-box">
+        <div class="header-text">
+            {% if user.is_authenticated %}
+            <p>Bienvenido {{ user.username }}</p>
+        {% endif %}
+    </div>
+
+
+
+</body>
+{% endblock %}
+
+
