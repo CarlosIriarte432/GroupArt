@@ -18,9 +18,19 @@ class User(models.Model):
 class UserType(models.Model):
     user_type_name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.user_type_name
+
+# Agregar los tipos de usuario por defecto
+UserType.objects.get_or_create(user_type_name="Tipo de Usuario 1")
+UserType.objects.get_or_create(user_type_name="Tipo de Usuario 2")
+
 # Modelo de Configuraciones de Privacidad
 class PrivacySettings(models.Model):
     privacy_options = models.TextField()
+
+# Agregar las opciones de privacidad por defecto
+PrivacySettings.objects.get_or_create(privacy_options="Opción 1, Opción 2, Opción 3")
 
 # Modelo de Roles
 class Role(models.Model):

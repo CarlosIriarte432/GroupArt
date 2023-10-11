@@ -1,19 +1,20 @@
+{% extends 'layout.html' %}
+{% block title %} Registro {% endblock %}
+
+{% block content %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido</title>
+    <title>Registro de Usuario</title>
 </head>
 <body>
-    <P>Registro de usuarios</P>
-    <form class= "form" method="post">
-
+    <h1>Registro de Usuario</h1>
+    <form method="post">
         {% csrf_token %}
-
-        {{ form.as_p }}
-
-    <button type="submit" id="submit">Registrarse</button>
+        {{ user_form.as_p }}
+        <button type="submit">Registrarse</button>
     </form>
 </body>
 </html>
+{% endblock %}
