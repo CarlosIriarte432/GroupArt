@@ -1,24 +1,51 @@
+
+<!-- app_name/templates/login.html -->
 {% extends 'layout.html' %}
 {% block title %} Login {% endblock %}
 
 {% block content %}
-
 <body>
-    <P>Inicio de sesion requerido</P>
-    <form method="post">
+    <div class="form-box">
+        <div class="header-text">
+            Iniciar sesión
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            
+            <div>
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            
+            <div>
+                {{ form.remember_me }}
+                <label for="{{ form.remember_me.id_for_label }}">Recuérdame</label>
+            </div>
 
-        {% csrf_token %}
+            <button type="submit" style="background-color: #007bff; color: #ffffff;">Iniciar sesión</button>
 
-        <label for="usuario">
-            Ingrese su usuario
-            <input type="text" placeholder="..." name="username">
-        </label>
-        <label for="password">
-            Ingrese su contraseña
-            <input type="password" placeholder="..." name="password">
-        </label>
-        <button type="submit"> iniciar sesión</button>
-    </form>
+        <div class="separator"></div>
+
+        <button type="button" onclick="window.location.href='/registro'" style="background-color: #008000; color: #ffffff;">Crear cuenta</button>
+
+            {% if messages %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+        </form>
+    </div>
 </body>
-
 {% endblock %}
+
+
