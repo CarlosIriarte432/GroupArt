@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido</title>
-</head>
+{% extends 'layout.html' %}
+{% block title %} Registro {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
 <body>
-    <P>Registro de usuarios</P>
-    <form class= "form" method="post">
 
+<div class="register-box">
+    <div class="header-text">
+        Crear cuenta de usuario
+    </div>
+    <form method="post">
         {% csrf_token %}
-
-        {{ form.as_p }}
-
-    <button type="submit" id="submit">Registrarse</button>
+        {{ user_form.as_p }}
+        <button type="submit">Registrarse</button>
     </form>
+</div>
+
 </body>
-</html>
+{% endblock %}
