@@ -1,18 +1,10 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.shortcuts import render, redirect
-from django import forms
 from django.contrib import messages
-from email import message
 from .forms import UserRegisterForm
-# app_name/views.py
-from django.shortcuts import render, redirect
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login
-from .models import User, UserType, PrivacySettings, UserProfile
-
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -36,7 +28,6 @@ def login_view(request):
 
 
 def index(request):
-    # Lógica de la vista
     return render(request, 'index.html')
 
 

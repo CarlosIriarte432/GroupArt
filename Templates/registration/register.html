@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block content %}
-  <div class="register-box">
-    <div class="header-text">
-        Crear cuenta de usuario
-    </div>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-    <button type="submit">Registrarse</button>
-    </form>
-  </div>
+<div class="register-box">
+<div class="header-text">
+    Crear cuenta de usuario
+</div>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+<button type="submit">Registrarse</button>
+</form>
+</div>
 {% endblock %}
