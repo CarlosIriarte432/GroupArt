@@ -11,7 +11,7 @@
 	left: 0;
 	right: 0;
 	width: 500px;
-	height: 1220px;
+	height: 1070px;
 }
 
 .register-box::before {
@@ -71,7 +71,7 @@
 	position: absolute;
 	left: 140px;
 	bottom: 190px;
-	background-color: rgb(221, 221, 221);
+
 }
 
 .register-box input[type=checkbox]:checked+label:before {
