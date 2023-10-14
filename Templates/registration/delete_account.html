@@ -1,0 +1,37 @@
+<!-- app_name/templates/delete_account.html -->
+{% extends 'layout.html' %}
+{% block title %} Eliminar cuenta {% endblock %}
+
+{% block content %}
+<body>
+    <div class="form-box">
+        <div class="header-text">
+            Eliminar cuenta
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div>
+                <label for="password">Contraseña:</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button type="submit" style="background-color: #007bff; color: #ffffff;">Eliminar cuenta</button>
+
+        <div class="separator"></div>
+
+
+            {% if messages %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+        </form>
+    </div>
+</body>
+{% endblock %}
