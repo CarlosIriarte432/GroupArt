@@ -1,20 +1,20 @@
 {% extends 'layout.html' %}
 {% block title %} Registro {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
 
 {% block content %}
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registro de Usuario</title>
-</head>
-<body>
-    <h1>Registro de Usuario</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        <button type="submit">Registrarse</button>
-    </form>
-</body>
-</html>
+<div class="register-box">
+<div class="header-text">
+    Crear cuenta de usuario
+</div>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+<button type="submit">Registrarse</button>
+</form>
+</div>
 {% endblock %}

@@ -1,20 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from django import forms
 from django.contrib import messages
-from email import message
-from django.contrib.auth.models import User
-
-# app_name/views.py
-from django.shortcuts import render, redirect
+from .forms import UserRegisterForm
 from .forms import LoginForm
-from django.contrib.auth import authenticate, login
-from .models import User, UserType, PrivacySettings
-from .forms import UserRegistrationForm  
 
 def login_view(request):
     if request.method == 'POST':
@@ -39,43 +28,38 @@ def login_view(request):
 
 
 def index(request):
-    # Lógica de la vista
     return render(request, 'index.html')
+
 
 def register_user(request):
     if request.method == 'POST':
-        user_form = UserRegistrationForm(request.POST)
-        if user_form.is_valid():
-            user_type_id = request.POST['user_type']  # Obtén el valor del tipo de usuario seleccionado en el formulario
-            user_type = get_object_or_404(UserType, pk=user_type_id)  # Obtiene la instancia de UserType
-            user = user_form.save(commit=False)
-            user.user_type = user_type  # Asigna la instancia de UserType
-            user.save()
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            messages.success(request, f'Usuario {username} creado, Por favor inicie sesión')
+            return redirect ('login')
+
     else:
-        user_form = UserRegistrationForm()
+        form = UserRegisterForm()
 
-
-    return render(request, 'registration/register.html', {'user_form': user_form})
-
+    context = { 'form' : form }
+    return render(request , 'registration/register.html', context)
 
 def custom_logout(request):
     logout(request)
     return redirect('/')
 
-
 @login_required
 def delete_account(request):
     if request.method == 'POST':
-        # Obtén la contraseña ingresada por el usuario
         password = request.POST.get('password')
         user = request.user
 
-        # Verifica si la contraseña es correcta
         if user.check_password(password):
-            # Elimina la cuenta del usuario
             user.delete()
             messages.success(request, 'Tu cuenta ha sido eliminada con éxito.')
-            return redirect('login')  # Cierra la sesión y redirige a la página de inicio de sesión
+            return redirect('login')
         else:
             messages.error(request, 'La contraseña es incorrecta. Inténtalo de nuevo.')
 
