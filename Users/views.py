@@ -59,7 +59,7 @@ def delete_account(request):
         if user.check_password(password):
             user.delete()
             messages.success(request, 'Tu cuenta ha sido eliminada con éxito.')
-            return redirect('login')
+            return redirect('/')
         else:
             messages.error(request, 'La contraseña es incorrecta. Inténtalo de nuevo.')
 
