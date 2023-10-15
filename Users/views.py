@@ -64,3 +64,20 @@ def delete_account(request):
             messages.error(request, 'La contraseña es incorrecta. Inténtalo de nuevo.')
 
     return render(request, 'registration/delete_account.html')
+
+@login_required
+def edit_profile(request):
+    user = request.user  # Obtén el usuario actual
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tus datos se han actualizado con éxito.')
+            if user is not None:
+                login(request, user)
+                return redirect('index')  # Redirige a la página de perfil o donde desees
+    else:
+        form = UserRegisterForm(instance=user)
+    
+    return render(request, 'registration/edit_profile.html', {'form': form})
+
