@@ -28,4 +28,6 @@ urlpatterns = [
     path('logout/', Users_views.custom_logout, name='custom_logout'),  
     path('accounts/', include('django.contrib.auth.urls')),
     path('registro/', Users_views.register_user, name='registro_usuario'),
+    path('eliminar-cuenta/', Users_views.delete_account, name='delete_account'),
+    path('editar-perfil/', Users_views.edit_profile, name='edit_profile'),
 ]

@@ -10,6 +10,11 @@
             {% if user.is_authenticated %}
             <p>Bienvenido {{ user.username }}</p>
         {% endif %}
+
+        <button type="button" onclick="window.location.href='/eliminar-cuenta'" style="background-color: #008000; color: #ffffff;">Eliminar Cuenta</button>
+        <div class="separator"></div>
+        <button type="button" onclick="window.location.href='/editar-perfil'" style="background-color: #008000; color: #ffffff;">Editar Cuenta</button>
+
     </div>
 
 

@@ -1,0 +1,36 @@
+<!-- app_name/templates/edit_profile.html -->
+{% extends 'layout.html' %}
+{% block title %} Editar Perfil {% endblock %}
+
+{% block content %}
+<body>
+    <div class="form-box">
+        <div class="header-text">
+            Editar Perfil
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div>
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit" style="background-color: #007bff; color: #ffffff;">Guardar Cambios</button>
+
+        <div class="separator"></div>
+
+
+            {% if messages %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+        </form>
+    </div>
+</body>
+{% endblock %}

@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm
 from .forms import LoginForm
-from django.contrib.auth import authenticate, login
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -49,3 +49,35 @@ def register_user(request):
 def custom_logout(request):
     logout(request)
     return redirect('/')
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        user = request.user
+
+        if user.check_password(password):
+            user.delete()
+            messages.success(request, 'Tu cuenta ha sido eliminada con éxito.')
+            return redirect('/')
+        else:
+            messages.error(request, 'La contraseña es incorrecta. Inténtalo de nuevo.')
+
+    return render(request, 'registration/delete_account.html')
+
+@login_required
+def edit_profile(request):
+    user = request.user  # Obtén el usuario actual
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tus datos se han actualizado con éxito.')
+            if user is not None:
+                login(request, user)
+                return redirect('index')  # Redirige a la página de perfil o donde desees
+    else:
+        form = UserRegisterForm(instance=user)
+    
+    return render(request, 'registration/edit_profile.html', {'form': form})
+
