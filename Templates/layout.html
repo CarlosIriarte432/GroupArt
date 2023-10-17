@@ -28,13 +28,21 @@
     {% if user.is_authenticated %}
       <li><a href="{% url 'custom_logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
     {% else %}
-      <li><a href="/"><i class="fas fa-sign-in-alt"></i> <span>Iniciar sesión</span></a></li>
+      <li><a href="user-login"><i class="fas fa-sign-in-alt"></i> <span>Iniciar sesión</span></a></li>
     {% endif %}
   </ul>
+
+  <ul class="nav">
+    <li><a href="/services/"><i class="fa-solid fa-handshake"></i> <span>Contratar servicios</span></a></li>
+  </ul>  
+
+  <ul class="nav">
+    <li><a href="/social/"><i class="fa-solid fa-square-rss"></i> <span>Muro Social</span></a></li>
+  </ul>   
   
   <ul class="nav">
     <li><a href="/sobre-nosotros/"><i class="fas fa-info-circle"></i> <span>Sobre nosotros</span></a></li>
-  </ul>
+  </ul>   
   
   <ul class="nav">
     <li><a href="/contactanos/"><i class="fas fa-envelope"></i> <span>Contáctanos</span></a></li>
@@ -44,11 +52,11 @@
     <li><a href="/terminos-y-condiciones/"><i class="fas fa-file-contract"></i> <span>Términos y condiciones</span></a></li>
   </ul>
   <div class="brand">
-    <a href="#">
+    <a href="{% url 'index' %}">
       <img id="logo-img" src="{% static 'img/logo.png' %}" alt="Logo de GroupArt" class="logo">
-
     </a>
   </div>
+  
 </div>
 
     {% block content %}

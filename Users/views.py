@@ -4,6 +4,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from .forms import UserRegisterForm
 from .forms import LoginForm
+from .models import UserProfile
 
 def login_view(request):
     if request.method == 'POST':
@@ -17,7 +18,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 # Redirecciona a la página de inicio o a donde desees después del inicio de sesión
-                return redirect('index')
+                return redirect('home')
             else:
                 # Agregar un mensaje de error
                 messages.error(request, 'El nombre de usuario o la contraseña son incorrectos.')
@@ -27,28 +28,41 @@ def login_view(request):
     return render(request, 'registration/login.html', {'form': form})
 
 
+def home(request):
+    return render(request, 'home.html')
+
 def index(request):
     return render(request, 'index.html')
-
 
 def register_user(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            
+            # Aquí puedes crear el perfil de usuario
+            UserProfile.objects.create(
+                user=user,
+                full_name=form.cleaned_data['full_name'],
+                rut=form.cleaned_data['rut'],
+                email=form.cleaned_data['email'],
+                phone=form.cleaned_data['phone'],
+                address=form.cleaned_data['address']
+            )
+            
             username = form.cleaned_data['username']
             messages.success(request, f'Usuario {username} creado, Por favor inicie sesión')
-            return redirect ('login')
+            return redirect('user-login')
 
     else:
         form = UserRegisterForm()
 
     context = { 'form' : form }
-    return render(request , 'registration/register.html', context)
+    return render(request, 'registration/register.html', context)
 
 def custom_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('login_view')
 
 @login_required
 def delete_account(request):

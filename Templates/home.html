@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block title %} GroupArt {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+
+    <div>
+        <button class= "services-button miperfil" type="button"  >Mi perfil</button>
+    </div>
+
+    <div>
+        <button class= "services-button misservicios" type="button"  >Mis servicios</button>
+    </div>
+
+    <div>
+        <button class= "services-button configuracion" type="button"  >Configuración</button>
+    </div>
+<br>
+    <div class="services-box">
+        <div class="header-text">
+            {% if user.is_authenticated %}
+            <p>Bienvenido {{ user.username }}</p>
+        {% endif %}
+
+        <button type="button" onclick="window.location.href='/eliminar-cuenta'" style="background-color: #008000; color: #ffffff;">Eliminar Cuenta</button>
+        <div class="separator"></div>
+        <button type="button" onclick="window.location.href='/editar-perfil'" style="background-color: #008000; color: #ffffff;">Editar Cuenta</button>
+
+    </div>
+
+
+
+</body>
+{% endblock %}
+
+
