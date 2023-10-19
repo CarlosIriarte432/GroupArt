@@ -2,22 +2,24 @@
 <!-- app_name/templates/login.html -->
 {% extends 'layout.html' %}
 {% block title %} GroupArt {% endblock %}
+{% load static %}
 
 {% block content %}
 <body>
+
+    <div class="brand">
+        <a href="{% url 'index' %}">
+          <img id="logo-img" src="{% static 'img/logo.png' %}" alt="Logo de GroupArt" class="logo">
+        </a>
+      </div>
+
     <div class="form-box">
         <div class="header-text">
-            {% if user.is_authenticated %}
-            <p>Bienvenido {{ user.username }}</p>
-        {% endif %}
-
-        <button type="button" onclick="window.location.href='/eliminar-cuenta'" style="background-color: #008000; color: #ffffff;">Eliminar Cuenta</button>
-        <div class="separator"></div>
-        <button type="button" onclick="window.location.href='/editar-perfil'" style="background-color: #008000; color: #ffffff;">Editar Cuenta</button>
-
+    
+            <p>Index GroupArt</p>   
     </div>
 
-
+ 
 
 </body>
 {% endblock %}

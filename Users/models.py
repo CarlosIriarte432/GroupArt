@@ -23,8 +23,6 @@ class UserProfile(models.Model):
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
-    privacy_settings = models.ForeignKey('PrivacySettings', on_delete=models.CASCADE)
-    user_type = models.ForeignKey('UserType', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
