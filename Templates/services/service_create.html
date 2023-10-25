@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %} GroupArt {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/services_create.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+    <div class="services-create-box">
+        <h1>Crear un Nuevo Servicio</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar</button>
+        </form>
+        <a href="{% url 'service-list' %}">Volver a la lista de servicios</a>
+    </div>
+</body>
+{% endblock %}

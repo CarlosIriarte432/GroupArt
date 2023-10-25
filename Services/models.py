@@ -2,6 +2,36 @@
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
+from Users.models import UserProfile
+
+# Modelo de Service Categories
+class ServiceCategory(models.Model):
+    category_name = models.CharField(max_length=50)
+    category_description = models.TextField()
+
+    def __str__(self):
+        return self.category_name
+
+# Modelo de Service Statuses
+class ServiceStatus(models.Model):
+    status_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.status_name
+
+# Modelo de Service
+class Service(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    availability = models.BooleanField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='services')
+    created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=None, null=True) 
+    category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
+    status = models.ForeignKey(ServiceStatus, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 # Modelo de Configuraciones de Privacidad
 class PrivacySettings(models.Model):
@@ -60,15 +90,6 @@ class Multimedia(models.Model):
     file_path = models.CharField(max_length=255)
     related_metadata = models.TextField()
 
-# Modelo de Service Categories
-class ServiceCategory(models.Model):
-    category_name = models.CharField(max_length=50)
-    category_description = models.TextField()
-
-# Modelo de Service Statuses
-class ServiceStatus(models.Model):
-    status_name = models.CharField(max_length=50)
-
 # Modelo de Notifications
 class Notification(models.Model):
     notification_type = models.CharField(max_length=50)
@@ -113,15 +134,7 @@ class TagsServicePosts(models.Model):
 
 # Otros modelos...
 
-# Modelo de Service
-class Service(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    availability = models.BooleanField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='services')
-    category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
-    status = models.ForeignKey(ServiceStatus, on_delete=models.CASCADE)
+
 
 # Otros modelos...
 

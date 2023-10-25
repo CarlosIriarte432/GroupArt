@@ -1,20 +1,20 @@
 
-.services-box {
+.services-create-box {
 	background-color: rgba(0, 0, 0, 0.5);
 	margin: auto auto;
 	padding: 40px;
 	border-radius: 5px;
 	box-shadow: 0 0 15px #000;
 	position: relative;
-	top: 85px;
+	top: 45px;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	width: 500px;
-	height: 500px;
+	height: 1070px;
 }
 
-.services-box::before {
+.services-create-box::before {
 	background-image: url('/static/img/fondo.jpg');
 	width: 105%;
 	height: 105%;
@@ -30,14 +30,14 @@
 	filter: blur(0px);
 }
 
-.services-box .header-text {
+.services-create-box .header-text {
 	font-size: 32px;
 	font-weight: 600;
 	padding-bottom: 8px;
 	text-align: center;
 }
 
-.services-box input {
+.services-create-box input {
 	margin: 10px 0px;
 	border: none;
 	padding: 10px;
@@ -47,11 +47,11 @@
 	font-family: poppins;
 }
 
-.services-box input[type=checkbox] {
+.services-create-box input[type=checkbox] {
 	display: none;
 }
 
-.services-box label {
+.services-create-box label {
 	position: static;
 	margin-left: 5px;
 	margin-right: 10px;
@@ -62,7 +62,7 @@
 	cursor: pointer;
 }
 
-.services-box label:before {
+.services-create-box label:before {
 	content: "";
 	display: inline-block;
 	width: 20px;
@@ -74,7 +74,7 @@
 
 }
 
-.services-box input[type=checkbox]:checked+label:before {
+.services-create-box input[type=checkbox]:checked+label:before {
 	content: "\2713";
 	font-size: 20px;
 	color: #000;
@@ -82,11 +82,11 @@
 	line-height: 20px;
 }
 
-.services-box span {
+.services-create-box span {
 	font-size: 14px;
 }
 
-.services-box button {
+.services-create-box button {
 	background-color: deepskyblue;
 	color: #fff;
 	border: none;
@@ -97,50 +97,3 @@
 	padding: 10px;
 	margin: 20px 0px;
 }
-.services-button {
-    background-color: deepskyblue;
-    color: #fff;
-    border: 2px solid #0077b6; /* Cambiamos el color del borde */
-    border-radius: 22px;
-    cursor: pointer;
-    width: 20%;
-    font-size: 18px;
-    padding: 7px;
-    margin: 20px 0px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, color 0.3s;
-	position:absolute;
-}
-
-.services-button:hover {
-    background-color: #0077b6;
-    color: #fff;
-}
-
-.miperfil {
-	left: 350px;
-	
-}
-
-.misservicios{
-	left: 680px;
-}
-
-.configuracion{
-	left: 1050px;
-}
-
-
-	.transparent-button {
-		background: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
-		border: none;
-		color: white;
-		padding: 15px 30px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		margin: 20px;
-		cursor: pointer;
-	}
-
