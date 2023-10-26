@@ -14,6 +14,7 @@
                 <div class="service-card">
                     <h2>{{ service.title }}</h2>
                     <p>Creado por: {{ service.created_by.full_name }}</p>
+                    <p>Fecha: {{ service.date }}</p>
                     <p>Descripción: {{ service.description }}</p>
                     <p>Precio: ${{ service.price }}</p>
                     <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>

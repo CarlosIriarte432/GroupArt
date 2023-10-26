@@ -25,10 +25,11 @@ class Service(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     availability = models.BooleanField()
+    date = models.DateField(verbose_name='Fecha', null=True, blank=True,)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='services')
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE, default=None, null=True) 
     category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE)
-    status = models.ForeignKey(ServiceStatus, on_delete=models.CASCADE)
+    status = models.ForeignKey(ServiceStatus, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title

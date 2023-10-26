@@ -9,10 +9,22 @@ class ServiceForm(forms.ModelForm):
 
     availability = forms.ChoiceField(
         choices=AVAILABILITY_CHOICES,
-        widget=forms.Select,  # O utiliza Select si prefieres una lista desplegable.
-        initial=True  # Puedes establecer el valor inicial según tus necesidades.
+        widget=forms.HiddenInput,  # Utiliza HiddenInput para ocultar el campo
+        initial=True  # Establece el valor inicial en 'True' (Disponible)
+    )
+
+    date = forms.DateField(
+        widget=forms.HiddenInput,
+        label='Fecha',  # Cambia la etiqueta según tus necesidades
+        required=False  # Si deseas que la fecha sea opcional, establece esto en True
     )
 
     class Meta:
         model = Service
-        fields = ['title', 'description', 'price', 'availability', 'category', 'status']
+        fields = ['title', 'description', 'price', 'availability', 'category', 'status', 'date']
+        labels = {
+            'title': 'Título',
+            'description': 'Descripción',
+            'price': 'Precio estimado',
+            'status': 'Estado',
+        }
