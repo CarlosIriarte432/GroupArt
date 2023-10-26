@@ -1,19 +1,18 @@
-
 .services-box {
 	background-color: rgba(0, 0, 0, 0.5);
 	margin: auto auto;
-	padding: 40px;
+	padding: 10px;
 	border-radius: 5px;
 	box-shadow: 0 0 15px #000;
 	position: relative;
-	top: 85px;
+	top: 40px;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	width: 500px;
-	height: 500px;
+	width: 954px;
+	height: 58px;
+	
 }
-
 .services-box::before {
 	background-image: url('/static/img/fondo.jpg');
 	width: 105%;
@@ -97,50 +96,71 @@
 	padding: 10px;
 	margin: 20px 0px;
 }
+
 .services-button {
-    background-color: deepskyblue;
-    color: #fff;
-    border: 2px solid #0077b6; /* Cambiamos el color del borde */
-    border-radius: 22px;
-    cursor: pointer;
-    width: 20%;
-    font-size: 18px;
-    padding: 7px;
-    margin: 20px 0px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, color 0.3s;
-	position:absolute;
+	background-color: deepskyblue;
+	color: #fff;
+	border: 2px solid #0077b6;
+	/* Cambiamos el color del borde */
+	border-radius: 22px;
+	cursor: pointer;
+	width: 20%;
+	font-size: 18px;
+	padding: 7px;
+	margin: 20px 0px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s, color 0.3s;
+	position: absolute;
 }
 
 .services-button:hover {
-    background-color: #0077b6;
-    color: #fff;
+	background-color: #0077b6;
+	color: #fff;
 }
 
 .miperfil {
 	left: 350px;
-	
+
 }
 
-.misservicios{
+.misservicios {
 	left: 680px;
 }
 
-.configuracion{
+.configuracion {
 	left: 1050px;
 }
 
+.transparent-button {
+	background: rgba(0, 0, 0, 0.5);
+	/* Color de fondo con transparencia */
+	border: none;
+	color: white;
+	padding: 15px 30px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 20px;
+	cursor: pointer;
+}
 
-	.transparent-button {
-		background: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
-		border: none;
-		color: white;
-		padding: 15px 30px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		margin: 20px;
-		cursor: pointer;
-	}
+/* Cambia el estilo de la cuadrícula a un diseño flexible (Flexbox) */
+.service-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Espacio uniforme entre las tarjetas */
+}
+
+/* Estilos para las tarjetas individuales */
+.service-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+	box-shadow: 0 0 5px #000;
+    padding: 30px;
+	position: relative;
+    width: calc(33.33% - 10px); /* Calcula el ancho de cada tarjeta para que haya 3 por fila */
+    margin-bottom: 20px; /* Espacio entre las filas */
+	background-color: rgba(0, 0, 0, 0.5);
+}
 

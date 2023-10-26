@@ -7,25 +7,21 @@
 {% endblock %}
 
 {% block content %}
-    <body>
-        <div class="form-box">
+    <div class="services-box">
         <h1>Lista de Servicios Disponibles</h1>
-        <ul>
+        <div class="service-cards">
             {% for service in services %}
-                <li>
-                    <strong>{{ service.title }}</strong><br>
-                    Creado por: {{ service.created_by.full_name }}  <br>
-                    Descripción: {{ service.description }}<br>
-                    Precio: ${{ service.price }}<br>
-                    Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}<br>
-                    Categoría: {{ service.category.category_name }}<br>
-                    Estado: {{ service.status.status_name }}<br>
-                    <br>
-                </li>
+                <div class="service-card">
+                    <h2>{{ service.title }}</h2>
+                    <p>Creado por: {{ service.created_by.full_name }}</p>
+                    <p>Descripción: {{ service.description }}</p>
+                    <p>Precio: ${{ service.price }}</p>
+                    <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
+                    <p>Categoría: {{ service.category.category_name }}</p>
+                    <p>Estado: {{ service.status.status_name }}</p>
+                </div>
             {% endfor %}
-        </ul>
-        <a href="{% url 'service-create' %}">Crear un Nuevo Servicio</a>
         </div>
-    </body>
+        <a href="{% url 'service-create' %}">Crear un Nuevo Servicio</a>
+    </div>
 {% endblock %}
-
