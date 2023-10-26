@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block title %} GroupArt {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="services-box">
+        <h1>Lista de Servicios Disponibles</h1>
+        <div class="service-cards">
+            {% for service in services %}
+                <div class="service-card">
+                    <h2>{{ service.title }}</h2>
+                    <p>Creado por: {{ service.created_by.full_name }}</p>
+                    <p>Descripción: {{ service.description }}</p>
+                    <p>Precio: ${{ service.price }}</p>
+                    <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
+                    <p>Categoría: {{ service.category.category_name }}</p>
+                    <p>Estado: {{ service.status.status_name }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'service-create' %}">Crear un Nuevo Servicio</a>
+    </div>
+{% endblock %}
