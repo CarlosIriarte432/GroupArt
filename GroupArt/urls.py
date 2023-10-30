@@ -22,6 +22,7 @@ from Users import views as Users_views
 from SocialMedia import views as SocialMedia_views
 from Services.views import ServiceCreateView  # Importación local de ServiceCreateView
 from Services.views import service_list  # Importación local de service_list
+from Services.views import service_detail  # Importación local de service_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,4 +36,5 @@ urlpatterns = [
     path('editar-perfil/', Users_views.edit_profile, name='edit_profile'),
     path('services/create/', ServiceCreateView.as_view(), name='service-create'),
     path('services/', service_list, name='service-list'),  
+    path('services/<int:service_id>/', service_detail, name='service-detail'),
 ]

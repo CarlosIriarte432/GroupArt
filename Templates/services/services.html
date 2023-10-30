@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block title %} GroupArt {% endblock %}
+{% block title %} Lista de servicios  {% endblock %}
 {% load static %}
 
 {% block head_css %}
@@ -12,14 +12,12 @@
         <div class="service-cards">
             {% for service in services %}
                 <div class="service-card">
-                    <h2>{{ service.title }}</h2>
+                    <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>
                     <p>Creado por: {{ service.created_by.full_name }}</p>
                     <p>Fecha: {{ service.date }}</p>
-                    <p>Descripción: {{ service.description }}</p>
-                    <p>Precio: ${{ service.price }}</p>
+                    <p>Precio estimado: ${{ service.price }}</p>
                     <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
                     <p>Categoría: {{ service.category.category_name }}</p>
-                    <p>Estado: {{ service.status.status_name }}</p>
                 </div>
             {% endfor %}
         </div>

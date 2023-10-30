@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
 from .models import Service
@@ -42,3 +42,7 @@ class ServiceCreateView(CreateView):
 def service_list(request):
     services = Service.objects.all()
     return render(request, 'services/services.html', {'services': services})
+
+def service_detail(request, service_id):
+    service = get_object_or_404(Service, pk=service_id)
+    return render(request, 'services/service_detail.html', {'service': service})
