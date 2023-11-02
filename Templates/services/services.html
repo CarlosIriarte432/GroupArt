@@ -1,26 +1,73 @@
 {% extends 'layout.html' %}
-{% block title %} Lista de servicios  {% endblock %}
+{% block title %} Lista de servicios {% endblock %}
 {% load static %}
 
 {% block head_css %}
-    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+</head>
+
+
 {% endblock %}
 
 {% block content %}
-    <div class="services-box">
-        <h1>Lista de Servicios Disponibles</h1>
-        <div class="service-cards">
-            {% for service in services %}
-                <div class="service-card">
-                    <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>
-                    <p>Creado por: {{ service.created_by.full_name }}</p>
-                    <p>Fecha: {{ service.date }}</p>
-                    <p>Precio estimado: ${{ service.price }}</p>
-                    <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
-                    <p>Categoría: {{ service.category.category_name }}</p>
-                </div>
-            {% endfor %}
-        </div>
-        <a href="{% url 'service-create' %}">Crear un Nuevo Servicio</a>
+<div class="services-box">
+  <h1>Lista de Servicios Disponibles</h1>
+  <div class="service-cards">
+    {% for service in services %}
+    <div class="service-card" data-service-id="{{ service.id }}">
+      <h2>{{ service.title }}</h2>
+      <p>Creado por: {{ service.user.username }}</p>
+      <p>Fecha: {{ service.date }}</p>
+      <p>Precio estimado: ${{ service.price }}</p>
+      <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
+      <p>Categoría: {{ service.category.category_name }}</p>
+      <!-- Añade aquí más campos si es necesario -->
     </div>
+    {% endfor %}
+    <div id="service-details-popup">
+        <span class="close" id="close-popup">&times;</span>
+        <h2 id="popup-title"></h2>
+        <p><strong>Descripción:</strong> <span id="popup-description" >{{ service.description }}</span></p>
+        <p><strong>Precio:</strong> $<span id="popup-price">{{ models.service.price }}</span></p>
+        <p><strong>Disponibilidad:</strong> <span id="popup-availability">{% if service.availability %} Disponible {% else %} No Disponible {% endif %}</span></p>
+        <p><strong>Categoría:</strong> <span id="popup-category">{{ service.category.category_name }}</span></p>
+        <!-- Agrega más campos si es necesario -->
+    </div>
+  </div>
+  <a href="{% url 'service-create' %}">Crear un Nuevo Servicio</a>
+</div>
+
+<!-- Modal para mostrar detalles del servicio -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.service-card h2').click(function(event) {
+      var service_id = $(this).parent().data('service-id');
+      var service_details = $('#service-details-popup');
+
+      $.ajax({
+        url: '{% url "get-service-details" 0 %}'.replace('0', service_id),
+        type: 'GET',
+        success: function(data) {
+          $('#popup-title').text(data.title);
+          $('#popup-description').text(data.description);
+          $('#popup-price').text('$' + data.price);
+          $('#popup-availability').text(data.availability ? 'Disponible' : 'No Disponible');
+          $('#popup-category').text(data.category_name);
+          // Agrega más campos si es necesario
+          service_details.show();
+        },
+        error: function(xhr, errmsg, err) {
+          console.log(err);
+        }
+      });
+    });
+
+    $('#close-popup').click(function() {
+      $('#service-details-popup').hide();
+    });
+  });
+</script>
 {% endblock %}

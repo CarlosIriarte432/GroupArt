@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
@@ -46,3 +47,26 @@ def service_list(request):
 def service_detail(request, service_id):
     service = get_object_or_404(Service, pk=service_id)
     return render(request, 'services/service_detail.html', {'service': service})
+
+def get_service_details(request, service_id):
+    try:
+        # Obten los detalles del servicio usando el ID proporcionado
+        service = Service.objects.get(id=service_id)
+        
+        # Crea un diccionario con los detalles del servicio
+        service_details = {
+            'title': service.title,
+            'description': service.description,
+            'price': str(service.price),
+        }
+        
+        # Devuelve los detalles en formato JSON
+        return JsonResponse(service_details)
+    except Service.DoesNotExist:
+        return JsonResponse({'error': 'El servicio no existe'}, status=404)
+from django.shortcuts import render
+from .models import Service
+
+def service_list(request):
+    services = Service.objects.all()
+    return render(request, 'services/services.html', {'services': services})

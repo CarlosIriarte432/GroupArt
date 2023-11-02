@@ -182,3 +182,15 @@
     margin: 0 auto; /* Centra horizontalmente */
 }
 
+
+#service-details-popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding: 20px;
+    top: 20%;
+    left: 30%;
+    width: 40%;
+    background-color: #2e4ba8;
+    border: 1px solid #888;
+}

@@ -36,5 +36,6 @@ urlpatterns = [
     path('editar-perfil/', Users_views.edit_profile, name='edit_profile'),
     path('services/create/', ServiceCreateView.as_view(), name='service-create'),
     path('services/', service_list, name='service-list'),  
-    path('services/<int:service_id>/', service_detail, name='service-detail'),
+    path('get-service-details/<int:service_id>/', service_detail, name='get-service-details'),
+
 ]
