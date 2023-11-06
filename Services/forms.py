@@ -28,3 +28,8 @@ class ServiceForm(forms.ModelForm):
             'price': 'Precio estimado',
             'status': 'Estado',
         }
+
+class ServiceEditForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['title', 'price', 'description', 'availability', 'category']        

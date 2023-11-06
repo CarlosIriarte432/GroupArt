@@ -95,3 +95,5 @@ def edit_profile(request):
     
     return render(request, 'registration/edit_profile.html', {'form': form})
 
+def profile(request):
+    return render(request, 'profile/profile.html') 

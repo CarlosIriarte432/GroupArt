@@ -12,7 +12,12 @@
         <div class="service-cards">
             {% for service in services %}
                 <div class="service-card">
-                    <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>
+                    <div class="options">
+                        <a href="{% url 'edit-service' service.id %}" class="edit-icon" title="Editar servicio"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'delete-service' service.id %}" class="delete-icon" title="Eliminar servicio"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                
+                    <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>              
                     <p>Creado por: {{ service.created_by.full_name }}</p>
                     <p>Fecha: {{ service.date }}</p>
                     <p>Precio estimado: ${{ service.price }}</p>
@@ -21,6 +26,7 @@
                 </div>
             {% endfor %}
         </div>
+        
         <a href="{% url 'service-create' %}">Crear un Nuevo Servicio</a>
     </div>
 {% endblock %}
