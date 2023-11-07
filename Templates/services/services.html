@@ -12,7 +12,17 @@
         <div class="service-cards">
             {% for service in services %}
                 <div class="service-card">
-                    <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>
+                    <div class="options">
+                        {% if service.created_by == request.user.userprofile %}
+                            <a href="{% url 'edit-service' service.id %}" class="edit-icon"><i class="fas fa-edit"></i></a>
+                            <a href="{% url 'delete-service' service.id %}" class="delete-icon"><i class="fas fa-trash-alt"></i></a>
+                        {% else %}
+                            <span class="edit-icon disabled"><i class=""></i></span>
+                            <span class="delete-icon disabled"><i class=""></i></span>
+                        {% endif %}
+                    </div>
+                
+                    <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>              
                     <p>Creado por: {{ service.created_by.full_name }}</p>
                     <p>Fecha: {{ service.date }}</p>
                     <p>Precio estimado: ${{ service.price }}</p>
@@ -21,6 +31,8 @@
                 </div>
             {% endfor %}
         </div>
+        
         <a href="{% url 'service-create' %}">Crear un Nuevo Servicio</a>
     </div>
 {% endblock %}
+

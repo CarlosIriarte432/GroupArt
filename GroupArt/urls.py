@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from Users import views as Users_views
+from Services import views as Services_views
 from SocialMedia import views as SocialMedia_views
 from Services.views import ServiceCreateView  # Importación local de ServiceCreateView
 from Services.views import service_list  # Importación local de service_list
@@ -29,6 +30,7 @@ urlpatterns = [
     path('', Users_views.index, name='index'),
     path('user-login', Users_views.login_view, name='login_view'),
     path('home', Users_views.home, name='home'),
+    path('ver-perfil', Users_views.profile, name='profile'),
     path('logout/', Users_views.custom_logout, name='custom_logout'),  
     path('accounts/', include('django.contrib.auth.urls')),
     path('registro/', Users_views.register_user, name='registro_usuario'),
@@ -37,4 +39,7 @@ urlpatterns = [
     path('services/create/', ServiceCreateView.as_view(), name='service-create'),
     path('services/', service_list, name='service-list'),  
     path('services/<int:service_id>/', service_detail, name='service-detail'),
+    path('editar-servicio/<int:service_id>/', Services_views.edit_service, name='edit-service'),  
+    path('eliminar-servicio/<int:service_id>/', Services_views.delete_service, name='delete-service'),  
+
 ]

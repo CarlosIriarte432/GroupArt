@@ -52,7 +52,7 @@ def register_user(request):
             
             username = form.cleaned_data['username']
             messages.success(request, f'Usuario {username} creado, Por favor inicie sesión')
-            return redirect('user-login')
+            return redirect('login_view')
 
     else:
         form = UserRegisterForm()
@@ -95,3 +95,5 @@ def edit_profile(request):
     
     return render(request, 'registration/edit_profile.html', {'form': form})
 
+def profile(request):
+    return render(request, 'profile/profile.html') 
