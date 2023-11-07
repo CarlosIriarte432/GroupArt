@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import date  # Importa el módulo date de datetime
 from django.contrib.auth import get_user_model
 from .models import UserProfile
-
+from django.contrib import messages
 User = get_user_model()
 
 
@@ -51,6 +51,11 @@ def service_detail(request, service_id):
 def edit_service(request, service_id):
     service = get_object_or_404(Service, id=service_id)
 
+    # Verificar si el usuario autenticado es el creador del servicio
+    if service.created_by != request.user.userprofile:
+        messages.error(request, "No tienes permiso para editar este servicio.")
+        return redirect('service-detail', service_id)
+
     if request.method == 'POST':
         form = ServiceEditForm(request.POST, instance=service)
         if form.is_valid():
@@ -65,8 +70,13 @@ def edit_service(request, service_id):
 def delete_service(request, service_id):
     service = get_object_or_404(Service, id=service_id)
 
+    # Verificar si el usuario autenticado es el creador del servicio
+    if service.created_by != request.user.userprofile:
+        messages.error(request, "No tienes permiso para eliminar este servicio.")
+        return redirect('service-detail', service_id)
+
     if request.method == 'POST':
         service.delete()
-        return redirect('service-list')  # Reemplaza 'lista-de-servicios' con la URL adecuada
+        return redirect('service-list')
 
     return render(request, 'services/delete_service.html', {'service': service})
