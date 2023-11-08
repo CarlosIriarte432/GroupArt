@@ -1,5 +1,6 @@
 from django import forms
-from .models import Service
+from .models import Service, ServiceRequest
+
 
 class ServiceForm(forms.ModelForm):
     AVAILABILITY_CHOICES = [
@@ -33,3 +34,12 @@ class ServiceEditForm(forms.ModelForm):
     class Meta:
         model = Service
         fields = ['title', 'price', 'description', 'availability', 'category']        
+
+
+class ServiceRequestForm(forms.ModelForm):
+    class Meta:
+        model = ServiceRequest
+        fields = ['request_text']
+        widgets = {
+            'request_text': forms.Textarea(attrs={'rows': 5, 'cols': 40, 'placeholder': 'Escribe tu solicitud aquí'}),
+        }

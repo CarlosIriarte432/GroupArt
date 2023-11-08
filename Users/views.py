@@ -97,3 +97,6 @@ def edit_profile(request):
 
 def profile(request):
     return render(request, 'profile/profile.html') 
+
+def my_services(request):
+    return render(request, 'services/my_services.html') 

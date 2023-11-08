@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
-from .models import Service
-from .forms import ServiceForm, ServiceEditForm
+from .models import Service, ServiceRequest, UserProfile
+from .forms import ServiceForm, ServiceEditForm, ServiceRequestForm
 from django.contrib.auth.decorators import login_required
 from datetime import date  # Importa el módulo date de datetime
 from django.contrib.auth import get_user_model
-from .models import UserProfile
 from django.contrib import messages
 User = get_user_model()
 
@@ -80,3 +79,24 @@ def delete_service(request, service_id):
         return redirect('service-list')
 
     return render(request, 'services/delete_service.html', {'service': service})
+
+def create_service_request(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+
+    if request.method == 'POST':
+        form = ServiceRequestForm(request.POST)
+        if form.is_valid():
+            # Asigna los campos author, request_status y created_at antes de guardar la solicitud
+            service_request = form.save(commit=False)
+            service_request.service = service
+            service_request.author = request.user
+            service_request.request_status = ServiceRequest.CREATED
+            service_request.save()
+
+            # Redirige a la lista de servicios
+            return redirect('service-list')
+
+    else:
+        form = ServiceRequestForm()
+
+    return render(request, 'services/create_service_request.html', {'form': form})

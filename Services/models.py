@@ -34,6 +34,31 @@ class Service(models.Model):
     def __str__(self):
         return self.title
 
+from django.db import models
+from django.contrib.auth.models import User
+from Services.models import Service
+
+class ServiceRequest(models.Model):
+    # Estados posibles
+    CREATED = 'Creada'
+    ACCEPTED = 'Aceptada'
+    CANCELED = 'Cancelada'
+    REQUEST_STATUS_CHOICES = [
+        (CREATED, 'Creada'),
+        (ACCEPTED, 'Aceptada'),
+        (CANCELED, 'Cancelada'),
+    ]
+
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='service_requests')
+    request_text = models.TextField()
+    request_status = models.CharField(max_length=10, choices=REQUEST_STATUS_CHOICES, default=CREATED)
+    created_at = models.DateTimeField(auto_now_add=True)  # Campo para la fecha y hora de creación
+
+    def __str__(self):
+        return f'Solicitud para {self.service.title} de {self.author.username}'
+
+
 # Modelo de Configuraciones de Privacidad
 class PrivacySettings(models.Model):
     privacy_options = models.TextField()

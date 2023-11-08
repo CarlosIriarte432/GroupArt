@@ -22,24 +22,24 @@ from Users import views as Users_views
 from Services import views as Services_views
 from SocialMedia import views as SocialMedia_views
 from Services.views import ServiceCreateView  # Importación local de ServiceCreateView
-from Services.views import service_list  # Importación local de service_list
-from Services.views import service_detail  # Importación local de service_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Users_views.index, name='index'),
     path('user-login', Users_views.login_view, name='login_view'),
-    path('home', Users_views.home, name='home'),
+    path('home/', Users_views.home, name='home'),
     path('ver-perfil', Users_views.profile, name='profile'),
+    path('my-services', Users_views.my_services, name='mis-servicios'),
     path('logout/', Users_views.custom_logout, name='custom_logout'),  
     path('accounts/', include('django.contrib.auth.urls')),
     path('registro/', Users_views.register_user, name='registro_usuario'),
     path('eliminar-cuenta/', Users_views.delete_account, name='delete_account'),
     path('editar-perfil/', Users_views.edit_profile, name='edit_profile'),
     path('services/create/', ServiceCreateView.as_view(), name='service-create'),
-    path('services/', service_list, name='service-list'),  
-    path('services/<int:service_id>/', service_detail, name='service-detail'),
+    path('services/', Services_views.service_list, name='service-list'),  
+    path('services/<int:service_id>/', Services_views.service_detail, name='service-detail'),
     path('editar-servicio/<int:service_id>/', Services_views.edit_service, name='edit-service'),  
     path('eliminar-servicio/<int:service_id>/', Services_views.delete_service, name='delete-service'),  
+    path('services/<int:service_id>/create-service-request/', Services_views.create_service_request, name='create-service-request'),
 
 ]
