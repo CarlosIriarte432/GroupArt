@@ -134,3 +134,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'index'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.elasticemail.com'
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'soporte@groupart.com'  # Tu dirección de correo electrónico registrada en Elastic Email
+EMAIL_HOST_PASSWORD = 'F9EEEEE96801CEAFCA1D3FCA14C1A8861CAC'  # La clave de API de Elastic Email
+DEFAULT_FROM_EMAIL = 'groupart.soporte@gmail.com'  # La dirección desde la que se enviarán los correos

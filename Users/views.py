@@ -1,3 +1,12 @@
+import base64
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
@@ -5,6 +14,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm
 from .forms import LoginForm
 from .models import UserProfile
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -96,4 +106,65 @@ def edit_profile(request):
     return render(request, 'registration/edit_profile.html', {'form': form})
 
 def profile(request):
-    return render(request, 'profile/profile.html') 
+    return render(request, 'profile/profile.html')
+
+User = get_user_model()
+class CustomPasswordResetView(PasswordResetView):
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        try:
+            user = get_user_model().objects.get(email=email)
+            print(f'Consulta exitosa. Usuario encontrado: {user}')
+            # Genera el token y envía el correo de recuperación
+            self.send_password_reset_email(self.request, user)  # Llama a la función send_password_reset_email
+        except get_user_model().DoesNotExist:
+            print(f'Usuario no encontrado con el correo electrónico: {email}')
+            # Usuario no encontrado, maneja este caso
+            pass
+        return super().form_valid(form)
+
+    def send_password_reset_email(self, request, user):
+        # Genera el token de restablecimiento de contraseña
+        token = default_token_generator.make_token(user)
+        user_id = str(user.pk)
+        uid = base64.b64encode(user_id.encode()).decode()
+        current_site = get_current_site(request)
+        reset_url = f"{current_site.domain}/reset_password/confirm/{uid}/{token}/"
+
+        # Crea el cuerpo del mensaje de correo electrónico utilizando un template
+        context = {
+            'user': user,
+            'reset_url': reset_url,
+            'uid': uid,
+            'token': token,
+        }
+        email_body = render_to_string('registration/password_reset_email.html', context)
+
+        # Configura las credenciales de Elastic Email
+        smtp_server = 'smtp.elasticemail.com'
+        smtp_port = 2525
+        smtp_username = 'soporte@groupart.com'
+        smtp_password = 'F9EEEEE96801CEAFCA1D3FCA14C1A8861CAC'
+
+        # Configura el mensaje de correo
+        msg = MIMEMultipart()
+        msg['From'] = 'groupart.soporte@gmail.com'
+        msg['To'] = user.email
+        msg['Subject'] = 'Recuperación de contraseña'
+
+        # Agrega el cuerpo del correo
+        msg.attach(MIMEText(email_body, 'html'))
+
+        try:
+            # Inicia una conexión SMTP
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.starttls()
+            server.login(smtp_username, smtp_password)
+
+            # Envía el correo electrónico
+            server.sendmail(msg['From'], msg['To'], msg.as_string())
+            server.quit()
+            print('Correo de recuperación de contraseña enviado con éxito')
+        except Exception as e:
+            print(f'Error al enviar el correo de recuperación: {str(e)}')

@@ -16,6 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from . import views
 from Users import views as Users_views
@@ -36,10 +37,14 @@ urlpatterns = [
     path('registro/', Users_views.register_user, name='registro_usuario'),
     path('eliminar-cuenta/', Users_views.delete_account, name='delete_account'),
     path('editar-perfil/', Users_views.edit_profile, name='edit_profile'),
+    path('reset_password/', Users_views.CustomPasswordResetView.as_view(), name='password_reset'),
+    path('reset_password/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset_password/confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_password/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('services/create/', ServiceCreateView.as_view(), name='service-create'),
     path('services/', service_list, name='service-list'),  
     path('services/<int:service_id>/', service_detail, name='service-detail'),
     path('editar-servicio/<int:service_id>/', Services_views.edit_service, name='edit-service'),  
-    path('eliminar-servicio/<int:service_id>/', Services_views.delete_service, name='delete-service'),  
+    path('eliminar-servicio/<int:service_id>/', Services_views.delete_service, name='delete-service'),
 
 ]
