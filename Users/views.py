@@ -1,10 +1,22 @@
+import base64, binascii
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
 from .forms import UserRegisterForm
 from .forms import LoginForm
 from .models import UserProfile
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -96,4 +108,59 @@ def edit_profile(request):
     return render(request, 'registration/edit_profile.html', {'form': form})
 
 def profile(request):
-    return render(request, 'profile/profile.html') 
+    return render(request, 'profile/profile.html')
+
+User = get_user_model()
+class CustomPasswordResetView(PasswordResetView):
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        try:
+            user = get_user_model().objects.get(email=email)
+            # Genera el token y envía el correo de recuperación
+            self.send_password_reset_email(self.request, user)  # Llama a la función send_password_reset_email
+        except get_user_model().DoesNotExist:
+            # Usuario no encontrado, maneja este caso
+            pass
+        return super().form_valid(form)
+
+    def send_password_reset_email(self, request, user):
+        # Genera el token de restablecimiento de contraseña
+        token = default_token_generator.make_token(user)
+        user_id = str(user.pk)
+        uid = base64.b64encode(user_id.encode()).decode()
+        print(f"El uid es: {uid}")
+        current_site = get_current_site(request)
+        reset_url = f"{current_site.domain}/reset_password/confirm/{uid}/{token}/"
+
+        # Crea el cuerpo del mensaje de correo electrónico utilizando un template
+        context = {
+            'user': user,
+            'reset_url': reset_url,
+        }
+        email_body = render_to_string('registration/password_reset_email.html', context)
+
+        # Envía el correo electrónico (Debes implementar la función get_gmail_service() correctamente)
+        service = self.get_gmail_service()  # Llama a la función en el contexto de la clase
+        message = {
+            'raw': base64.urlsafe_b64encode(email_body.encode()).decode('utf-8')
+        }
+        try:
+            service.users().messages().send(userId='me', body=message).execute()    # pylint: disable=maybe-no-member
+            print('Correo de recuperación de contraseña enviado con éxito')
+        except Exception as e:
+            print(f'Error al enviar el correo de recuperación: {str(e)}')
+
+
+
+
+    def get_gmail_service(self):
+        credentials_path = './credencial.json'
+
+        credentials = service_account.Credentials.from_service_account_file(
+            credentials_path, scopes=['https://www.googleapis.com/auth/gmail.send']
+        )
+
+        service = build('gmail', 'v1', credentials=credentials)
+
+        return service
