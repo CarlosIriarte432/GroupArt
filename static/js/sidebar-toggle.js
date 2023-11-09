@@ -6,3 +6,37 @@ document.addEventListener("DOMContentLoaded", function () {
         sidebar.classList.toggle("collapsed");
     });
 });
+
+function showDetails(titulo, creadoPor, fecha, descripcion, precio, disponibilidad, categoria, estado){
+    document.getElementById("titulo").innerHTML = titulo;
+    document.getElementById("creadoPor").innerHTML = "Creado por: " + creadoPor;
+    document.getElementById("fecha").innerHTML = "Fecha: " + fecha;
+    document.getElementById("descripcion").innerHTML = "Descripción: " + descripcion;
+    document.getElementById("precio").innerHTML = "Precio: $" + precio;
+    document.getElementById("disponibilidad").innerHTML = "Disponibilidad: " + disponibilidad;
+    document.getElementById("categoria").innerHTML = "Categoría: " + categoria;
+    document.getElementById("estado").innerHTML = "Estado: " + estado;
+    document.getElementById("details").style.display = "block";
+    document.getElementById("service-boxes").style.filter = "blur(3px)";
+    blockCards();
+}
+
+function closeDetails(){
+    document.getElementById("details").style.display = "none";
+    document.getElementById("service-boxes").style.filter = "none";
+    unblockCards();
+}
+
+function blockCards(){
+    var cards = document.getElementsByClassName("service-card");
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].className += " block-card";
+    }
+}
+
+function unblockCards(){
+    var cards = document.getElementsByClassName("service-card");
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].classList.remove("block-card");
+    }
+}
