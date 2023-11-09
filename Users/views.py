@@ -163,7 +163,7 @@ class CustomPasswordResetView(PasswordResetView):
             server.login(smtp_username, smtp_password)
 
             # Envía el correo electrónico
-            server.sendmail(msg['From'], msg['To'], msg.as_string())
+            server.sendmail(msg['From'], msg['To'], msg['email_body'])
             server.quit()
             print('Correo de recuperación de contraseña enviado con éxito')
         except Exception as e:
