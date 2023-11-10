@@ -40,6 +40,10 @@
       <li><a href="/user-login"><i class="fas fa-sign-in-alt"></i> <span>Iniciar sesión</span></a></li>
     {% endif %}
   </ul>
+
+  <ul class="nav">
+    <li><a href="{% url 'home' %}"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
+  </ul>  
   {% if user.is_authenticated %}
   <ul class="nav">
     <li><a href="/services/"><i class="fa-solid fa-handshake"></i> <span>Contratar servicios</span></a></li>
