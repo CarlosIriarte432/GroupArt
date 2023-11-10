@@ -80,3 +80,9 @@ def delete_service(request, service_id):
         return redirect('service-list')
 
     return render(request, 'services/delete_service.html', {'service': service})
+
+def lista_de_servicios(request):
+    # Filtrar los servicios creados por el usuario actual
+    services = Service.objects.filter(created_by=request.user.userprofile)
+
+    return render(request, 'services/my_services.html', {'services': services})

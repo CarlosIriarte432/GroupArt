@@ -25,6 +25,7 @@ from SocialMedia import views as SocialMedia_views
 from Services.views import ServiceCreateView  # Importación local de ServiceCreateView
 from Services.views import service_list  # Importación local de service_list
 from Services.views import service_detail  # Importación local de service_list
+from Services.views import lista_de_servicios  # Importación local de lista_de_servicios
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,7 +43,8 @@ urlpatterns = [
     path('reset_password/confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset_password/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('services/create/', ServiceCreateView.as_view(), name='service-create'),
-    path('services/', service_list, name='service-list'),  
+    path('services/', service_list, name='service-list'),
+    path('my_services/', lista_de_servicios, name='lista_de_servicios'),
     path('services/<int:service_id>/', service_detail, name='service-detail'),
     path('editar-servicio/<int:service_id>/', Services_views.edit_service, name='edit-service'),  
     path('eliminar-servicio/<int:service_id>/', Services_views.delete_service, name='delete-service'),

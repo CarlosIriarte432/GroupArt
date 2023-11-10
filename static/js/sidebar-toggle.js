@@ -40,3 +40,13 @@ function unblockCards(){
         cards[i].classList.remove("block-card");
     }
 }
+
+function openFlow(url){
+    var left = (screen.width/2)-390;
+      var top = (screen.height/2)-355;
+       winConfig = "width=780,height=710, directories=no, titlebar=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top="+top+", left="+left;
+       window.open(
+           url,
+           "Contratacion GroupArt",
+           winConfig).focus();
+   }

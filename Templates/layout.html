@@ -38,9 +38,24 @@
     {% endif %}
   </ul>
   {% if user.is_authenticated %}
-  <ul class="nav">
-    <li><a href="/services/"><i class="fa-solid fa-handshake"></i> <span>Contratar servicios</span></a></li>
-  </ul>  
+  {% comment %} <ul class="nav">
+    <li><a href="/services/"><i class="fa-solid fa-handshake"></i> <span>Servicios</span></a></li> {% endcomment %}
+    
+  </ul>
+  <body>
+    <ul class="nav">
+      <li><a href="#" id="serviciosTab"><i class="fa-solid fa-handshake"></i> <span>Servicios</span></a>
+          <!-- Agrega subpestañas como listas desplegables ocultas -->
+          <ul class="subpestañas" id="subpestañasServicios">
+              <li><a href="/services/" id="Servicios">Disponibles</a></li>
+              <li><a href="" id="serviciosContratados">Contratados</a></li>
+              <li><a href="/my_services/" id="serviciosCreados">Creados</a></li>
+          </ul>
+      </li>
+    </ul>
+
+    
+    
 
   <ul class="nav">
     <li><a href="/social/"><i class="fa-solid fa-square-rss"></i> <span>Muro Social</span></a></li>
@@ -75,4 +90,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>
+
+<script>
+  document.getElementById('serviciosTab').addEventListener('click', function () {
+      var subpestañas = document.getElementById('subpestañasServicios');
+      if (subpestañas.style.display === 'none' || subpestañas.style.display === '') {
+          subpestañas.style.display = 'block';
+      } else {
+          subpestañas.style.display = 'none';
+      }
+  });
+</script>
+
 </html>
