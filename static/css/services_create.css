@@ -12,10 +12,11 @@
 	right: 0;
 	width: 500px;
 	height: 1070px;
+	text-align: center;
+
 }
 
 .services-create-box::before {
-	background-image: url('/static/img/fondo.jpg');
 	width: 105%;
 	height: 105%;
 	background-size: cover;
