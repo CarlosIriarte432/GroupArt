@@ -1,0 +1,141 @@
+.social-box {
+	background-color: rgba(0, 0, 0, 0.5);
+	margin: auto auto;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 15px #000;
+	position: relative;
+	top: 40px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 954px;
+	height: 58px;
+	
+}
+.social-box::before {
+	background-image: url('/static/img/fondo.jpg');
+	width: 105%;
+	height: 105%;
+	background-size: cover;
+	content: "";
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	display: block;
+	filter: blur(0px);
+}
+
+.social-box .header-text {
+	font-size: 32px;
+	font-weight: 600;
+	padding-bottom: 8px;
+	text-align: center;
+}
+
+.social-box input {
+	margin: 10px 0px;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	width: 100%;
+	font-size: 18px;
+	font-family: poppins;
+}
+
+.social-box input[type=checkbox] {
+	display: none;
+}
+
+.social-box label {
+	position: static;
+	margin-left: 5px;
+	margin-right: 10px;
+	top: 5px;
+	display: inline-block;
+	/* width: 20px; */
+	height: 20px;
+	cursor: pointer;
+}
+
+.social-box label:before {
+	content: "";
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 5px;
+	position: absolute;
+	left: 140px;
+	bottom: 190px;
+
+}
+
+.social-box input[type=checkbox]:checked+label:before {
+	content: "\2713";
+	font-size: 20px;
+	color: #000;
+	text-align: center;
+	line-height: 20px;
+}
+
+.social-box span {
+	font-size: 14px;
+}
+
+.social-box button {
+	background-color: deepskyblue;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 100%;
+	font-size: 18px;
+	padding: 10px;
+	margin: 20px 0px;
+}
+
+.social-button {
+	background-color: deepskyblue;
+	color: #fff;
+	border: 2px solid #0077b6;
+	/* Cambiamos el color del borde */
+	border-radius: 22px;
+	cursor: pointer;
+	width: 20%;
+	font-size: 18px;
+	padding: 7px;
+	margin: 20px 0px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s, color 0.3s;
+	position: absolute;
+}
+
+.social-button:hover {
+	background-color: #0077b6;
+	color: #fff;
+}
+
+
+
+/* Cambia el estilo de la cuadrícula a un diseño flexible (Flexbox) */
+.social-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Espacio uniforme entre las tarjetas */
+}
+
+/* Estilos para las tarjetas individuales */
+.social-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #000;
+    padding: 30px;
+    position: relative;
+    width: 10px;
+    height: 10px; /* Calcula el ancho de cada tarjeta para que haya 3 por fila */
+    margin-bottom: 20px; /* Espacio entre las filas */
+    background-color: rgba(0, 0, 0, 0.5);
+}

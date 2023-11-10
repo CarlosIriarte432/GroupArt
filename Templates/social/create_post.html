@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %} Muro social  {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/social.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="social-box">
+        <h1>Crear Nueva Publicación</h1>
+        <div class="social-cards">
+            <form method="post" action="{% url 'create_post' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Publicar</button>
+            </form>
+            
+    </div>
+{% endblock %}
+

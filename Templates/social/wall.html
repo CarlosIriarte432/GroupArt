@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %} Muro social  {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/social.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="social-box">
+        <h1>Muro Social</h1>
+        {% for post in posts %}
+            <div>
+                <p>{{ post.user.username }} - {{ post.timestamp }}</p>
+                <p>{{ post.content }}</p>
+            </div>
+        {% endfor %}
+        <a href="{% url 'create_post' %}">Crear nueva publicación</a>
+    </div>
+{% endblock %}
+

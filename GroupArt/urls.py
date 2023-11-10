@@ -48,5 +48,7 @@ urlpatterns = [
     path('services/<int:service_id>/', service_detail, name='service-detail'),
     path('editar-servicio/<int:service_id>/', Services_views.edit_service, name='edit-service'),  
     path('eliminar-servicio/<int:service_id>/', Services_views.delete_service, name='delete-service'),
+    path('wall/', SocialMedia_views.wall, name='wall'),
+    path('create_post/', SocialMedia_views.create_post, name='create_post'),
 
 ]
