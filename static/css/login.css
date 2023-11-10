@@ -16,12 +16,12 @@ body {
 	border-radius: 5px;
 	box-shadow: 0 0 15px #000;
 	position: absolute;
-	top: 45px;
+	top: 20px;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	width: 500px;
-	height: 500px;
+	height: 530px;
 }
 
 .form-box::before {
@@ -80,7 +80,7 @@ body {
 	border-radius: 5px;
 	position: absolute;
 	left: 140px;
-	bottom: 190px;
+	bottom: 220px;
 	background-color: rgb(221, 221, 221);
 }
 
