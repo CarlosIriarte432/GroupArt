@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block title %} Estadísticas de Logins {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/statistics.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="graphs-box">
+    <div class="header-text">
+        Estadísticas
+    </div>
+<div id="login-statistics-chart" style="width:600px;height:250px;"></div>
+
+<script>
+        var login_count_by_month = {{ login_count_by_month|safe }};   
+        // Agrega un console.log para verificar los datos
+        console.log("Datos de login_count_by_month:", login_count_by_month);
+
+        var months = login_count_by_month.map(function (entry) {
+            return entry.month;
+        });
+
+        var counts = login_count_by_month.map(function (entry) {
+            return entry.total;
+        });
+
+        var data = [{
+            x: months,
+            y: counts,
+            type: 'bar',
+            marker: {
+                color: 'blue'
+            }
+        }];
+
+        var layout = {
+            title: 'Número de Logins Mensuales',
+            xaxis: {
+                title: 'Mes',
+                tickformat: '%Y-%m' // Formato personalizado para mostrar solo año y mes
+            },
+            yaxis: {
+                title: 'Número de Logins'
+            }
+        }; // Elimina el punto y coma (;) innecesario en esta línea
+
+        // ...
+
+        // Agrega otro console.log para verificar los datos antes de crear el gráfico
+        console.log("Datos para el gráfico:", data);
+
+        Plotly.newPlot('login-statistics-chart', data, layout);
+</script>
+<br>
+<div class="separator"></div>
+<a href="{% url 'export_plotly_to_pdf' %}" class="btn btn-primary">Exportar a PDF</a></div>
+
+
+{% endblock %}
