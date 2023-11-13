@@ -60,7 +60,7 @@ def edit_service(request, service_id):
         form = ServiceEditForm(request.POST, instance=service)
         if form.is_valid():
             form.save()
-            return redirect('service-detail', service_id)
+            return redirect('service-list')
 
     else:
         form = ServiceEditForm(instance=service)
