@@ -63,4 +63,7 @@ urlpatterns = [
     path('edit-post/<int:post_id>/', SocialMedia_views.edit_post, name='edit-post'),
     path('delete-post/<int:post_id>/', SocialMedia_views.delete_post, name='delete-post'),
     # path('rate-service/<int:service_id>/', Services_views.rate_service, name='rate-service'),
+    path('login-statistics/', Users_views.login_statistics, name='login-statistics'),
+    path('export-plotly-to-pdf/', Users_views.export_plotly_to_pdf, name='export_plotly_to_pdf'),
 ]
+

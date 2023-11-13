@@ -92,3 +92,5 @@ def return_pay(request):
 
 def confirm_pay(request):
     return render(request, 'services/confirm_pay.html')
+
+
