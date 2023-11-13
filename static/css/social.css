@@ -11,10 +11,9 @@
 	right: 0;
 	width: 954px;
 	height: 58px;
-	
+	text-align: center;
 }
 .social-box::before {
-	background-image: url('/static/img/fondo.jpg');
 	width: 105%;
 	height: 105%;
 	background-size: cover;
@@ -138,4 +137,241 @@
     height: 10px; /* Calcula el ancho de cada tarjeta para que haya 3 por fila */
     margin-bottom: 20px; /* Espacio entre las filas */
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para el contenedor de muro social */
+
+/* Estilo para cada publicación */
+.post {
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 1px solid #ddd;
+	padding: 25px;
+	margin: 40px;
+	border-radius: 15px;
+	height: 200px;
+	text-align: left;
+
+}
+
+.post p {
+    margin: 0;
+}
+
+/* Estilo para el enlace "Crear nueva publicación" */
+.create-post-link {
+    display: block;
+    margin-top: 10px;
+}
+.options {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-icon, .delete-icon {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Posiciona los iconos en la esquina superior derecha de la cabecera */
+.edit-icon {
+    margin-left: auto;
+}
+
+
+.social-create-box {
+	background-color: rgba(0, 0, 0, 0.5);
+	margin: auto auto;
+	padding: 40px;
+	border-radius: 5px;
+	box-shadow: 0 0 15px #000;
+	position: relative;
+	top: 45px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 500px;
+	height: 550px;
+	text-align: center;
+
+}
+
+.social-create-box::before {
+	width: 105%;
+	height: 105%;
+	background-size: cover;
+	content: "";
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	display: block;
+	filter: blur(0px);
+}
+
+.social-create-box .header-text {
+	font-size: 32px;
+	font-weight: 600;
+	padding-bottom: 8px;
+	text-align: center;
+}
+
+.social-create-box input {
+	margin: 10px 0px;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	width: 100%;
+	font-size: 18px;
+	font-family: poppins;
+}
+
+.social-create-box input[type=checkbox] {
+	display: none;
+}
+
+.social-create-box label {
+	position: static;
+	margin-left: 5px;
+	margin-right: 10px;
+	top: 5px;
+	display: inline-block;
+	/* width: 20px; */
+	height: 20px;
+	cursor: pointer;
+}
+
+.social-create-box label:before {
+	content: "";
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 5px;
+	position: absolute;
+	left: 140px;
+	bottom: 190px;
+
+}
+
+.social-create-box input[type=checkbox]:checked+label:before {
+	content: "\2713";
+	font-size: 20px;
+	color: #000;
+	text-align: center;
+	line-height: 20px;
+}
+
+.social-create-box span {
+	font-size: 14px;
+}
+
+.social-create-box button {
+	background-color: deepskyblue;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 100%;
+	font-size: 18px;
+	padding: 10px;
+	margin: 20px 0px;
+}
+
+.edit-social-box{
+	background-color: rgba(0, 0, 0, 0.5);
+	margin: auto auto;
+	padding: 40px;
+	border-radius: 5px;
+	box-shadow: 0 0 15px #000;
+	position: relative;
+	top: 45px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 500px;
+	height: 515px;
+}
+
+.edit-social-box::before {
+	width: 105%;
+	height: 105%;
+	background-size: cover;
+	content: "";
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	display: block;
+	filter: blur(0px);
+}
+
+.edit-social-box .header-text {
+	font-size: 32px;
+	font-weight: 600;
+	padding-bottom: 8px;
+	text-align: center;
+}
+
+.edit-social-box input {
+	margin: 10px 0px;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	width: 100%;
+	font-size: 18px;
+	font-family: poppins;
+}
+
+.edit-social-box input[type=checkbox] {
+	display: none;
+}
+
+.edit-social-box label {
+	position: static;
+	margin-left: 5px;
+	margin-right: 10px;
+	top: 5px;
+	display: inline-block;
+	/* width: 20px; */
+	height: 20px;
+	cursor: pointer;
+}
+
+.edit-social-box label:before {
+	content: "";
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 5px;
+	position: absolute;
+	left: 140px;
+	bottom: 190px;
+
+}
+
+.edit-social-box input[type=checkbox]:checked+label:before {
+	content: "\2713";
+	font-size: 20px;
+	color: #000;
+	text-align: center;
+	line-height: 20px;
+}
+
+.edit-social-box span {
+	font-size: 14px;
+}
+
+.edit-social-box button {
+	background-color: deepskyblue;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 100%;
+	font-size: 18px;
+	padding: 10px;
+	margin: 20px 0px;
 }

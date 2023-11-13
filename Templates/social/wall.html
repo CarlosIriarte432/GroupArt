@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block title %} Muro social  {% endblock %}
+{% block title %} Muro social {% endblock %}
 {% load static %}
 
 {% block head_css %}
@@ -10,12 +10,21 @@
     <div class="social-box">
         <h1>Muro Social</h1>
         {% for post in posts %}
-            <div>
+            <div class="post">
+                <div class="options">
+                    {% if post.user == request.user %}
+                        <a href="{% url 'edit-post' post.id %}" class="edit-icon"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'delete-post' post.id %}" class="delete-icon"><i class="fas fa-trash-alt"></i></a>
+                    {% else %}
+                        <span class="edit-icon disabled"><i class=""></i></span>
+                        <span class="delete-icon disabled"><i class=""></i></span>
+                    {% endif %}
+                </div>
+                
                 <p>{{ post.user.username }} - {{ post.timestamp }}</p>
                 <p>{{ post.content }}</p>
             </div>
         {% endfor %}
-        <a href="{% url 'create_post' %}">Crear nueva publicación</a>
+        <a href="{% url 'create_post' %}" class="create-post-link">Crear nueva publicación</a>
     </div>
 {% endblock %}
-

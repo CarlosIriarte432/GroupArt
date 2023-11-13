@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block title %} Eliminar Publicación {% endblock %}
+
+{% block content %}
+<div class="form-box">
+    <div class="header-text">
+        Confirmación de Eliminación
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>¿Estás seguro de que deseas eliminar la publicación "{{ post.title }}"?</p>
+        <button type="submit">Eliminar</button>
+        <a href="{% url 'wall' %}">Cancelar</a>
+    </form>
+
+    {% if messages %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

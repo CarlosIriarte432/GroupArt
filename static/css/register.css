@@ -15,7 +15,6 @@
 }
 
 .register-box::before {
-	background-image: url('/static/img/fondo.jpg');
 	width: 105%;
 	height: 105%;
 	background-size: cover;

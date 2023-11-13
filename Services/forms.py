@@ -25,11 +25,17 @@ class ServiceForm(forms.ModelForm):
         labels = {
             'title': 'Título',
             'description': 'Descripción',
-            'price': 'Precio estimado',
+            'price': 'Precio',
             'status': 'Estado',
         }
 
 class ServiceEditForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['title', 'price', 'description', 'availability', 'category']        
+        fields = ['title', 'price', 'description', 'category']   
+        labels = {
+            'title': 'Título',
+            'description': 'Descripción',
+            'price': 'Precio',
+            'category': 'Estado',
+        }     

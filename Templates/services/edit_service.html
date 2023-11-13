@@ -1,10 +1,16 @@
 <!-- app_name/templates/edit_profile.html -->
 {% extends 'layout.html' %}
 {% block title %} Editar Perfil {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <body>
-    <div class="form-box">
+    <div class="edit-service-box">
         <div class="header-text">
             Editar servicio 
         </div>
@@ -26,8 +32,6 @@
                 </ul>
             </div>
             {% endif %}
-            
-        </form>
-    </div>
+        </div>
 </body>
 {% endblock %}
