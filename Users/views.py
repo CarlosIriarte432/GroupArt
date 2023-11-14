@@ -21,8 +21,11 @@ import json
 from django.http import HttpResponse
 import plotly.graph_objects as go
 from xhtml2pdf import pisa
-
 from io import BytesIO
+from django.db.models.functions import TruncMonth
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import JsonResponse
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -181,14 +184,17 @@ class CustomPasswordResetView(PasswordResetView):
         except Exception as e:
             print(f'Error al enviar el correo de recuperación: {str(e)}')
 
-from django.db.models import Count
-from django.db.models.functions import TruncMonth
 
+
+@staff_member_required
 def login_statistics(request):
     # Realiza una consulta para contar los logins por mes y formatea las fechas como cadenas
     login_count_by_month = LoginRecord.objects.annotate(
         month=TruncMonth('login_time')
     ).values('month').annotate(total=Count('id'))
+
+    # Calcula el total de logins en todos los meses
+    total_logins = LoginRecord.objects.count()
 
     login_count_by_month = list(login_count_by_month)  # Convierte a una lista
 
@@ -199,21 +205,9 @@ def login_statistics(request):
     # Convierte login_count_by_month en JSON
     login_count_by_month_json = json.dumps(login_count_by_month)
 
-    return render(request, 'statistics/login_statistics.html', {'login_count_by_month': login_count_by_month_json})
+    return render(request, 'statistics/login_statistics.html', {'login_count_by_month': login_count_by_month_json, 'total_logins': total_logins})
 
-
-
-
-
-from django.http import HttpResponse
-from xhtml2pdf import pisa
-from io import BytesIO
-import plotly.graph_objs as go
-import json
-from .models import LoginRecord
-from django.db.models import Count
-from django.db.models.functions import TruncMonth
-
+@staff_member_required
 def export_plotly_to_pdf(request):
     # Realiza la misma consulta para contar los logins por mes y formatear las fechas como cadenas
     login_count_by_month = LoginRecord.objects.annotate(
@@ -242,3 +236,21 @@ def export_plotly_to_pdf(request):
         return response
 
     return HttpResponse("Error al generar el PDF")
+
+def users_created_statistics(request):
+    users_created_by_month = User.objects.annotate(
+        month=TruncMonth('date_joined')
+    ).values('month').annotate(total=Count('id'))
+
+    months = [entry['month'] for entry in users_created_by_month]
+    counts = [entry['total'] for entry in users_created_by_month]
+
+    total_users_created = sum(counts)
+
+    data = {
+        'months': months,
+        'counts': counts,
+        'total_users_created': total_users_created
+    }
+
+    return JsonResponse(data)
