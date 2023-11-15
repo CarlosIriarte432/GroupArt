@@ -200,7 +200,7 @@ def login_statistics(request):
 
     # Formatea las fechas como cadenas
     for entry in login_count_by_month:
-        entry['month'] = entry['month'].strftime('%Y-%m-%d')
+        entry['month'] = entry['month'].strftime('%Y-%m')
 
     # Convierte login_count_by_month en JSON
     login_count_by_month_json = json.dumps(login_count_by_month)
