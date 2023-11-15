@@ -21,10 +21,16 @@
                     {% endif %}
                 </div>
                 
-                <p>{{ post.user.username }} - {{ post.timestamp }}</p>
+                <p>{{ post.user.userprofile.full_name }} - {{ post.timestamp }}</p>
                 <p>{{ post.content }}</p>
+                <br>
+                <div class="like-container">
+                    <p>Me gusta: {{ post.like_set.count }}</p>
+                    <a href="{% url 'like-post' post.id %}" class="like-icon"><i class="fas fa-thumbs-up"></i></a>
+                </div>
             </div>
         {% endfor %}
         <a href="{% url 'create_post' %}" class="create-post-link">Crear nueva publicación</a>
     </div>
 {% endblock %}
+

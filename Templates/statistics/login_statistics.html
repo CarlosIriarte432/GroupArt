@@ -13,10 +13,8 @@
     </div>
 
     <div id="login-statistics-chart" style="width:600px;height:250px;">
-        <!-- Código para el primer gráfico -->
         <script>
             var login_count_by_month = {{ login_count_by_month|safe }};   
-            // Agrega un console.log para verificar los datos
             console.log("Datos de login_count_by_month:", login_count_by_month);
     
             var months = login_count_by_month.map(function (entry) {
@@ -40,30 +38,27 @@
                 title: 'Número de Logins Mensuales',
                 xaxis: {
                     title: 'Mes',
-                    tickformat: '%Y-%m' // Formato personalizado para mostrar solo año y mes
+                    tickformat: '%Y-%m',
+                    categoryorder: 'category ascending' // O 'category descending'
                 },
                 yaxis: {
                     title: 'Número de Logins'
                 }
-            }; // Elimina el punto y coma (;) innecesario en esta línea
-    
-            // ...
-    
-            // Agrega otro console.log para verificar los datos antes de crear el gráfico
-            console.log("Datos para el gráfico:", data);
-    
+            };
+            
+            Plotly.newPlot('login-statistics-chart', data, layout);
+                console.log("Datos para el gráfico:", data);
+                console.log("Valores de meses:", months);
+                console.log("Valores de counts:", counts);
             Plotly.newPlot('login-statistics-chart', data, layout);
         </script>
         <p style="text-align: center;">Total de logins: {{ total_logins }}</p>
     
-        <!-- Botón "Exportar a PDF" para el primer gráfico -->
         <div class="export-button">
             <a href="{% url 'export_plotly_to_pdf' %}" class="btn btn-primary">Exportar a PDF (Gráfico 1)</a>
         </div>
     </div>
     <div class="separator"></div>
-
-    <!-- Agrega un separador o un espacio -->
 
     <br>
     <br>
@@ -74,9 +69,7 @@
     <div id="users-created-chart" style="width:600px;height:250px;"></div>
     <p style="text-align: center;">Total de usuarios creados: {{ total_users_created }}</p>
     <a href="{% url 'export_plotly_to_pdf' %}" class="btn btn-primary">Exportar a PDF (Gráfico 2)</a>
-        <!-- Código para el segundo gráfico -->
         <script>
-            // Llama a la vista users_created_statistics para obtener los datos del segundo gráfico
                     fetch("{% url 'users-created-statistics' %}")
                     .then(response => response.json())
                     .then(data => {
@@ -88,7 +81,7 @@
                             y: counts,
                             type: 'bar',
                             marker: {
-                                color: 'green' // Puedes cambiar el color según tus preferencias
+                                color: 'green' 
                             }
                         }];
             
