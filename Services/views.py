@@ -40,8 +40,10 @@ class ServiceCreateView(CreateView):
         return initial
 
 def service_list(request):
-    services = Service.objects.all()
-    return render(request, 'services/services.html', {'services': services})
+    query = request.GET.get('q', '')
+    services = Service.objects.filter(title__icontains=query)
+    
+    return render(request, 'services/services.html', {'services': services, 'query': query})
 
 def service_detail(request, service_id):
     service = get_object_or_404(Service, pk=service_id)
