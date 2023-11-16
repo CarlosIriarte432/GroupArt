@@ -1,3 +1,5 @@
+
+<!-- payment -->
 {% extends 'layout.html' %}
 {% block title %} Lista de servicios  {% endblock %}
 {% load static %}
@@ -24,13 +26,12 @@
                     </div>
                 
                     {% comment %} <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>              {% endcomment %}
-                    <h2><a onClick="showDetails('{{ service.title }}', '{{ service.created_by.full_name }}', '{{ service.date }}', '{{ service.description }}', '{{ service.price }}', '{% if service.availability %} Disponible {% else %} No Disponible {% endif %}', '{{ service.category.category_name }}', '{{ service.status.status_name }}')">{{ service.title }}</a></h2>             
+                    <h2><a onClick="showDetails('{{ service.title }}', '{{ service.created_by.full_name }}', '{{ service.date }}', '{{ service.description }}', '{{ service.price }}', '{% if service.availability %} Disponible {% else %} No Disponible {% endif %}', '{{ service.category.category_name }}', '{{ service.status.status_name }}', {{service.id}})">{{ service.title }}</a></h2>             
                     <p>Creado por: {{ service.created_by.full_name }}</p>
                     <p>Fecha: {{ service.date }}</p>
                     <p>Precio estimado: ${{ service.price }}</p>
                     <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
                     <p>Categoría: {{ service.category.category_name }}</p>
-                    
                 </div>
             {% endfor %}
         </div>
@@ -40,7 +41,9 @@
 
     <div class="detail-card" style="display:none" id="details">
       <h1>Detalles del Servicio</h1>
+
       <h2 id="titulo"></h2>
+      <p id ="id" hidden> </p>
       <p id="creadoPor"></p>
       <p id="fecha"></p>
       <p id="descripcion"></p>
@@ -48,7 +51,15 @@
       <p id ="disponibilidad"></p>
       <p id="categoria"></p>
       <p id="estado"></p>
-      <button onclick="openFlow('https://www.flow.cl/btn.php?token=i1qhrvm')">Contratar</button>
+        <form method="post" action="{% url 'create-payment'%}">
+            {% csrf_token %}
+            <input type="hidden" id="amount" name="amount">
+            <input type="hidden" id="subject" name="subject">
+            <input type="hidden" id="commerce_order" name="commerce_order">
+            <input type="hidden" id="email" value="{{user.email}}" name="email">
+            <input type="hidden" id="id" value="{{user.id}}" name="id">
+            <button type="submit">Contratar</button>
+            </form>
       <button onclick="closeDetails()">Cerrar</button>
     </div>
 {% endblock %}

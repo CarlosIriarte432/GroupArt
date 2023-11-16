@@ -53,3 +53,9 @@ class RolePermissions(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
 
+class RegistroLogin(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha = models.DateField()
+
+    def __str__(self):
+        return f'{self.usuario.username} - {self.fecha}'

@@ -26,6 +26,10 @@ from Services.views import ServiceCreateView  # Importación local de ServiceCre
 from Services.views import service_list  # Importación local de service_list
 from Services.views import service_detail  # Importación local de service_list
 from Services.views import lista_de_servicios  # Importación local de lista_de_servicios
+from payment.views import Payment # Importación local de create_payment
+from Services.views import return_pay # Importación local de return_pay
+from Services.views import confirm_pay # Importación local de confirm_pay
+from Services.views import return_last_user_token # Importación local de return_last_user_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -50,5 +54,11 @@ urlpatterns = [
     path('eliminar-servicio/<int:service_id>/', Services_views.delete_service, name='delete-service'),
     path('wall/', SocialMedia_views.wall, name='wall'),
     path('create_post/', SocialMedia_views.create_post, name='create_post'),
-
+    # path('Payment/<int:amount>/<str:email>/<str:subject>/<int:commerce_order>', Payment.create_payment, name='create-payment'),
+    path('Payment', Payment.create_payment, name='create-payment'),
+    path('Payment/update', Payment.update_state_order, name='update-state-order'),
+    path('services/return_pay', return_pay, name='return-pay'),
+    path('services/confirm_pay', confirm_pay, name='confirm-pay'),
+    path('services/', return_last_user_token, name='return-last-user-token'),
+    
 ]

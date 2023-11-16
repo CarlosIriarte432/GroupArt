@@ -86,3 +86,9 @@ def lista_de_servicios(request):
     services = Service.objects.filter(created_by=request.user.userprofile)
 
     return render(request, 'services/my_services.html', {'services': services})
+
+def return_pay(request):
+    return render(request, 'services/return_pay.html')
+
+def confirm_pay(request):
+    return render(request, 'services/confirm_pay.html')

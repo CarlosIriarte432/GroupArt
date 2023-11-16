@@ -1,0 +1,31 @@
+<!-- templates/payment_success.html -->
+{% extends 'layout.html' %}
+{% block title %} Confirmación de pago {% endblock %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{% block content %}
+    <div class="detail-card">
+        <h1>Pago Exitoso</h1>
+        <p>¡Gracias por tu pago! La transacción se ha completado con éxito.</p>
+
+        <!-- Muestra detalles del pago -->
+        <h2>Detalles del Pago:</h2>
+        <p><strong>ID de Transacción:</strong> {{ payment.order }}</p>
+        <p><strong>Monto:</strong> ${{ payment.amount }}</p>
+
+        <!-- Puedes agregar más detalles según tus necesidades -->
+
+        <!-- Enlace de regreso a la página principal u otra página relevante -->
+        <a href="{% url 'home' %}">Volver a la Página Principal</a>
+    </div>
+    
+{% endblock %}
+
+
+
