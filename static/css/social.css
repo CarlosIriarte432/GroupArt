@@ -375,3 +375,16 @@
 	padding: 10px;
 	margin: 20px 0px;
 }
+
+.post {
+    /* Otros estilos para tu publicación */
+    margin-bottom: 20px; /* Espacio entre publicaciones */
+    padding-bottom: 20px; /* Espacio debajo del contenido del post */
+    border-bottom: 1px solid #ccc; /* Línea divisoria entre publicaciones */
+}
+
+.like-container {
+    display: flex; /* Usa flexbox para organizar los elementos */
+    justify-content: space-between; /* Espacio uniformemente entre los elementos */
+    align-items: center; /* Centra verticalmente los elementos */
+}

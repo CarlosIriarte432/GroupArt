@@ -82,3 +82,5 @@ def delete_service(request, service_id):
         return redirect('service-list')
 
     return render(request, 'services/delete_service.html', {'service': service})
+
+

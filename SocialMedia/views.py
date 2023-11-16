@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Post
 from .forms import PostForm
 from .forms import EditPostForm  
+from .models import Like
+
 
 from django.contrib.auth.decorators import login_required
 def wall(request):
@@ -49,3 +51,20 @@ def delete_post(request, post_id):
         return render(request, 'social/delete_post.html', {'post': post})
 
     return redirect('wall')
+
+
+def like_post(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    user = request.user
+
+    # Verifica si el usuario ya le dio "Me gusta" al post
+    liked = Like.objects.filter(post=post, user=user).exists()
+
+    if not liked:
+        # Si el usuario no ha dado "Me gusta", crea un nuevo registro de "Me gusta"
+        Like.objects.create(post=post, user=user)
+    else:
+        # Si el usuario ya dio "Me gusta", puedes hacer algo aquí, como mostrar un mensaje
+        pass
+
+    return redirect('wall')  # Redirige a la página del muro social

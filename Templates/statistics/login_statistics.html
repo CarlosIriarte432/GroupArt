@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% block title %} Estadísticas de Logins {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/statistics.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="graphs-box">
+    <div class="header-text">
+        Estadísticas
+    </div>
+
+    <div id="login-statistics-chart" style="width:600px;height:250px;">
+        <script>
+            var login_count_by_month = {{ login_count_by_month|safe }};   
+            console.log("Datos de login_count_by_month:", login_count_by_month);
+    
+            var months = login_count_by_month.map(function (entry) {
+                return entry.month;
+            });
+    
+            var counts = login_count_by_month.map(function (entry) {
+                return entry.total;
+            });
+    
+            var data = [{
+                x: months,
+                y: counts,
+                type: 'bar',
+                marker: {
+                    color: 'blue'
+                }
+            }];
+    
+            var layout = {
+                title: 'Número de Logins Mensuales',
+                xaxis: {
+                    title: 'Mes',
+                    tickformat: '%Y-%m',
+                    categoryorder: 'category ascending' // O 'category descending'
+                },
+                yaxis: {
+                    title: 'Número de Logins'
+                }
+            };
+            
+            Plotly.newPlot('login-statistics-chart', data, layout);
+                console.log("Datos para el gráfico:", data);
+                console.log("Valores de meses:", months);
+                console.log("Valores de counts:", counts);
+            Plotly.newPlot('login-statistics-chart', data, layout);
+        </script>
+        <p style="text-align: center;">Total de logins: {{ total_logins }}</p>
+    
+        <div class="export-button">
+            <a href="{% url 'export_plotly_to_pdf' %}" class="btn btn-primary">Exportar a PDF (Gráfico 1)</a>
+        </div>
+    </div>
+    <div class="separator"></div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div id="users-created-chart" style="width:600px;height:250px;"></div>
+    <p style="text-align: center;">Total de usuarios creados: {{ total_users_created }}</p>
+    <a href="{% url 'export_plotly_to_pdf' %}" class="btn btn-primary">Exportar a PDF (Gráfico 2)</a>
+        <script>
+                    fetch("{% url 'users-created-statistics' %}")
+                    .then(response => response.json())
+                    .then(data => {
+                        var months = data.months;
+                        var counts = data.counts;
+            
+                        var data = [{
+                            x: months,
+                            y: counts,
+                            type: 'bar',
+                            marker: {
+                                color: 'green' 
+                            }
+                        }];
+            
+                        var layout = {
+                            title: 'Usuarios Creados Mensualmente',
+                            xaxis: {
+                                title: 'Mes',
+                                tickformat: '%Y-%m'
+                            },
+                            yaxis: {
+                                title: 'Cantidad de Usuarios'
+                            }
+                        };
+            
+                        Plotly.newPlot('users-created-chart', data, layout);
+                    });
+        </script>
+
+    </div>
+</div>
+{% endblock %}
