@@ -5,8 +5,9 @@ from .forms import EditPostForm
 
 from django.contrib.auth.decorators import login_required
 def wall(request):
-    posts = Post.objects.all()
-    return render(request, 'social/wall.html', {'posts': posts})
+    query = request.GET.get('q', '')
+    posts = Post.objects.filter(content__icontains=query)
+    return render(request, 'social/wall.html', {'posts': posts, 'query': query})
 
 
 @login_required

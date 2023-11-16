@@ -9,6 +9,10 @@
 {% block content %}
     <div class="social-box">
         <h1>Muro Social</h1>
+        <form method="get" action="{% url 'wall' %}">
+            <input type="text" name="q" placeholder="Buscar por contenido del post" value="{{ query }}">
+            <button type="submit">Buscar</button>
+        </form>
         {% for post in posts %}
             <div class="post">
                 <div class="options">
