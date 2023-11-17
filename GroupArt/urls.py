@@ -29,7 +29,7 @@ from Services.views import lista_de_servicios  # Importación local de lista_de_
 from payment.views import Payment # Importación local de create_payment
 from Services.views import return_pay # Importación local de return_pay
 from Services.views import confirm_pay # Importación local de confirm_pay
-from Services.views import return_last_user_token # Importación local de return_last_user_token
+# from Services.views import return_last_user_token # Importación local de return_last_user_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -59,7 +59,7 @@ urlpatterns = [
     path('Payment/update', Payment.update_state_order, name='update-state-order'),
     path('services/return_pay', return_pay, name='return-pay'),
     path('services/confirm_pay', confirm_pay, name='confirm-pay'),
-    path('services/', return_last_user_token, name='return-last-user-token'),
+    # path('services/', return_last_user_token, name='return-last-user-token'),
     path('edit-post/<int:post_id>/', SocialMedia_views.edit_post, name='edit-post'),
     path('delete-post/<int:post_id>/', SocialMedia_views.delete_post, name='delete-post'),
     # path('rate-service/<int:service_id>/', Services_views.rate_service, name='rate-service'),

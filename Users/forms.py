@@ -1,10 +1,8 @@
 # app_name/forms.py
 from django import forms
-from .models import User, UserType, UserProfile, PrivacySettings
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import UserProfile, PrivacySettings, UserType
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100, label="Ingrese su email")

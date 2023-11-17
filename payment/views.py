@@ -58,7 +58,7 @@ class Payment():
             #Guardar el token y el order en la base de datos
             try:
                 with connection.cursor() as cursor:
-                    cursor.execute("INSERT INTO payment (`order`, id_user, token) VALUES (%s, %s, %s)", (order, user_id, token))
+                    cursor.execute("INSERT INTO payment_payment (`order`, id_user, token) VALUES (%s, %s, %s)", (order, user_id, token))
             except Exception as e:
                 # Manejar la excepción de manera apropiada, posiblemente registrarla
                 logger.error(f"Error al insertar en la base de datos: {str(e)}")
