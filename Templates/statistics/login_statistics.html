@@ -55,7 +55,7 @@
         <p style="text-align: center;">Total de logins: {{ total_logins }}</p>
     
         <div class="export-button">
-            <a href="{% url 'export_plotly_to_pdf' %}" class="btn btn-primary">Exportar a PDF (Gráfico 1)</a>
+            <a href="{% url 'export-to-excel' %}" class="btn btn-primary">Exportar logins diarios a Excel</a>
         </div>
     </div>
     <div class="separator"></div>
@@ -68,7 +68,9 @@
 
     <div id="users-created-chart" style="width:600px;height:250px;"></div>
     <p style="text-align: center;">Total de usuarios creados: {{ total_users_created }}</p>
-    <a href="{% url 'export_plotly_to_pdf' %}" class="btn btn-primary">Exportar a PDF (Gráfico 2)</a>
+    <div class="export-button">
+        <a href="{% url 'export_users_created' %}" class="btn btn-primary">Exportar usuarios creados a Excel</a>
+    </div>
         <script>
                     fetch("{% url 'users-created-statistics' %}")
                     .then(response => response.json())

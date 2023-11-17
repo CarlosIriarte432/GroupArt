@@ -56,5 +56,7 @@ urlpatterns = [
     path('users-created-statistics/', Users_views.users_created_statistics, name='users-created-statistics'),
     path('like-post/', SocialMedia_views.like_post, name='like-post'),
     path('like-post/<int:post_id>/', SocialMedia_views.like_post, name='like-post'),
+    path('export-to-excel/', Users_views.export_to_excel, name='export-to-excel'),
+    path('export-users-created/', Users_views.export_users_created_to_excel, name='export_users_created'),
 ]
 

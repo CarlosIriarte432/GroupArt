@@ -25,6 +25,7 @@ from io import BytesIO
 from django.db.models.functions import TruncMonth
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
+from excel_response import ExcelResponse
 
 def login_view(request):
     if request.method == 'POST':
@@ -254,3 +255,41 @@ def users_created_statistics(request):
     }
 
     return JsonResponse(data)
+
+
+def export_to_excel(request):
+    queryset = LoginRecord.objects.all().values('id', 'login_time', 'user_id')
+    return ExcelResponse(queryset)
+
+import xlsxwriter
+from django.http import HttpResponse
+import io
+
+def export_users_created_to_excel(request):
+    # Obtener los datos de usuarios creados mensualmente
+    users_created_by_month = User.objects.annotate(
+        month=TruncMonth('date_joined')
+    ).values('month').annotate(total=Count('id'))
+
+    # Crear un archivo Excel
+    output = io.BytesIO()
+    workbook = xlsxwriter.Workbook(output)
+    worksheet = workbook.add_worksheet()
+
+    # Escribir los datos en el archivo Excel
+    row = 0
+    col = 0
+    worksheet.write(row, col, 'Mes')
+    worksheet.write(row, col + 1, 'Usuarios Creados')
+    for entry in users_created_by_month:
+        row += 1
+        worksheet.write(row, col, entry['month'].strftime('%Y-%m'))
+        worksheet.write(row, col + 1, entry['total'])
+
+    workbook.close()
+
+    # Configurar la respuesta HTTP para descargar el archivo
+    response = HttpResponse(output.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=usuarios_creados.xlsx'
+
+    return response
