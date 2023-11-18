@@ -49,6 +49,10 @@ def service_list(request):
     services = Service.objects.filter(title__icontains=query)
     
     return render(request, 'services/services.html', {'services': services, 'query': query})
+    query = request.GET.get('q', '')
+    services = Service.objects.filter(title__icontains=query)
+    
+    return render(request, 'services/services.html', {'services': services, 'query': query})
 
 def service_detail(request, service_id):
     service = get_object_or_404(Service, pk=service_id)
@@ -67,6 +71,7 @@ def edit_service(request, service_id):
         form = ServiceEditForm(request.POST, instance=service)
         if form.is_valid():
             form.save()
+            return redirect('service-list')
             return redirect('service-list')
 
     else:
