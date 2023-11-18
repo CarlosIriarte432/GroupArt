@@ -18,7 +18,7 @@
                         <h2>{{ servicio_contratado.title }}</h2>
                         <p>Creado por: {{ servicio_contratado.full_name}}</p>
                         <p>Fecha: {{ servicio_contratado.date }}</p>
-                        <p>Precio estimado: ${{ servicio_contratado.price }}</p>
+                        <p>Precio: ${{ servicio_contratado.price }}</p>
                         <p>Estado de Pago: {{ servicio_contratado.payment_status }}</p>
                         {% if servicio_contratado.status_id == 1  %}
                             <input type="hidden" value="cancel" id="action" name="action"/>

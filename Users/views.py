@@ -11,6 +11,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
+from excel_response import ExcelResponse
 from .forms import UserRegisterForm
 from .forms import LoginForm
 from .models import UserProfile
@@ -25,6 +26,9 @@ from io import BytesIO
 from django.db.models.functions import TruncMonth
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
+import xlsxwriter
+from django.http import HttpResponse
+import io
 
 def login_view(request):
     if request.method == 'POST':
@@ -207,35 +211,6 @@ def login_statistics(request):
 
     return render(request, 'statistics/login_statistics.html', {'login_count_by_month': login_count_by_month_json, 'total_logins': total_logins})
 
-@staff_member_required
-def export_plotly_to_pdf(request):
-    # Realiza la misma consulta para contar los logins por mes y formatear las fechas como cadenas
-    login_count_by_month = LoginRecord.objects.annotate(
-        month=TruncMonth('login_time')
-    ).values('month').annotate(total=Count('id'))
-
-    login_count_by_month = list(login_count_by_month)
-
-    for entry in login_count_by_month:
-        entry['month'] = entry['month'].strftime('%Y-%m-%d')
-
-    months = [entry['month'] for entry in login_count_by_month]
-    counts = [entry['total'] for entry in login_count_by_month]
-
-    fig = go.Figure(data=[go.Bar(x=months, y=counts)])
-
-    fig_html = go.FigureWidget.to_html(fig, full_html=False)
-
-    result = BytesIO()
-
-    pdf = pisa.pisaDocument(BytesIO(fig_html.encode("UTF-8")), result)
-
-    if not pdf.err:
-        response = HttpResponse(result.getvalue(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="grafico-logins.pdf"'
-        return response
-
-    return HttpResponse("Error al generar el PDF")
 
 def users_created_statistics(request):
     users_created_by_month = User.objects.annotate(
@@ -254,3 +229,38 @@ def users_created_statistics(request):
     }
 
     return JsonResponse(data)
+
+def export_to_excel(request):
+    queryset = LoginRecord.objects.all().values('id', 'login_time', 'user_id')
+    return ExcelResponse(queryset)
+
+
+
+def export_users_created_to_excel(request):
+    # Obtener los datos de usuarios creados mensualmente
+    users_created_by_month = User.objects.annotate(
+        month=TruncMonth('date_joined')
+    ).values('month').annotate(total=Count('id'))
+
+    # Crear un archivo Excel
+    output = io.BytesIO()
+    workbook = xlsxwriter.Workbook(output)
+    worksheet = workbook.add_worksheet()
+
+    # Escribir los datos en el archivo Excel
+    row = 0
+    col = 0
+    worksheet.write(row, col, 'Mes')
+    worksheet.write(row, col + 1, 'Usuarios Creados')
+    for entry in users_created_by_month:
+        row += 1
+        worksheet.write(row, col, entry['month'].strftime('%Y-%m'))
+        worksheet.write(row, col + 1, entry['total'])
+
+    workbook.close()
+
+    # Configurar la respuesta HTTP para descargar el archivo
+    response = HttpResponse(output.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=usuarios_creados.xlsx'
+
+    return response

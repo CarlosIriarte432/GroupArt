@@ -61,7 +61,6 @@ urlpatterns = [
     path('delete-post/<int:post_id>/', SocialMedia_views.delete_post, name='delete-post'),
     # path('rate-service/<int:service_id>/', Services_views.rate_service, name='rate-service'),
     path('login-statistics/', Users_views.login_statistics, name='login-statistics'),
-    path('export-plotly-to-pdf/', Users_views.export_plotly_to_pdf, name='export_plotly_to_pdf'),
     path('users-created-statistics/', Users_views.users_created_statistics, name='users-created-statistics'),
     path('like-post/', SocialMedia_views.like_post, name='like-post'),
     path('like-post/<int:post_id>/', SocialMedia_views.like_post, name='like-post'),    # path('Payment/<int:amount>/<str:email>/<str:subject>/<int:commerce_order>', Payment.create_payment, name='create-payment'),
@@ -75,9 +74,10 @@ urlpatterns = [
     path('delete-post/<int:post_id>/', SocialMedia_views.delete_post, name='delete-post'),
     # path('rate-service/<int:service_id>/', Services_views.rate_service, name='rate-service'),
     path('login-statistics/', Users_views.login_statistics, name='login-statistics'),
-    path('export-plotly-to-pdf/', Users_views.export_plotly_to_pdf, name='export_plotly_to_pdf'),
     path('users-created-statistics/', Users_views.users_created_statistics, name='users-created-statistics'),
     path('like-post/', SocialMedia_views.like_post, name='like-post'),
     path('like-post/<int:post_id>/', SocialMedia_views.like_post, name='like-post'),
+    path('export-to-excel/', Users_views.export_to_excel, name='export-to-excel'),
+    path('export-users-created/', Users_views.export_users_created_to_excel, name='export_users_created'),
 ]
 
