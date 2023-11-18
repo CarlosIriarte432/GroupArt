@@ -16,6 +16,5 @@
         <p>Precio: ${{ service.price }}</p>
         <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
         <p>Categoría: {{ service.category.category_name }}</p>
-        <p>Estado: {{ service.status.status_name }}</p>
     </div>
 {% endblock %}

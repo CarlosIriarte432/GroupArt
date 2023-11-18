@@ -32,6 +32,8 @@ class Service(models.Model):
     status = models.ForeignKey(ServiceStatus, on_delete=models.CASCADE, null=True)
     avg_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
     total_ratings = models.PositiveIntegerField(default=0)
+    avg_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
+    total_ratings = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
