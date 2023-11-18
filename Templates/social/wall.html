@@ -26,8 +26,9 @@
                 <br>
                 <div class="like-container">
                     <p>Me gusta: {{ post.like_set.count }}</p>
-                    <a href="{% url 'like-post' post.id %}" class="like-icon"><i class="fas fa-thumbs-up"></i></a>
                 </div>
+                <a href="{% url 'like-post' post.id %}" class="like-icon"><i class="fas fa-thumbs-up"></i></a>
+
             </div>
         {% endfor %}
         <a href="{% url 'create_post' %}" class="create-post-link">Crear nueva publicación</a>
