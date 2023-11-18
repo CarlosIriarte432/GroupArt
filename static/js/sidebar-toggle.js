@@ -8,22 +8,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function showDetails(titulo, creadoPor, fecha, descripcion, precio, disponibilidad, categoria, estado, id){
-    document.getElementById("titulo").innerHTML = titulo;
-    document.getElementById("subject").value = titulo;
-    document.getElementById("creadoPor").innerHTML = "Creado por: " + creadoPor;
-    document.getElementById("fecha").innerHTML = "Fecha: " + fecha;
-    document.getElementById("descripcion").innerHTML = "Descripción: " + descripcion;
-    document.getElementById("precio").innerHTML = "Precio: $" + precio;
-    document.getElementById("amount").value = precio;
-    document.getElementById("disponibilidad").innerHTML = "Disponibilidad: " + disponibilidad;
-    document.getElementById("categoria").innerHTML = "Categoría: " + categoria;
-    document.getElementById("estado").innerHTML = "Estado: " + estado;
-    document.getElementById("id").innerHTML = id;
-    document.getElementById("commerce_order").value = id;
-    document.getElementById("details").style.display = "block";
-    document.getElementById("service-boxes").style.filter = "blur(3px)";
-    blockCards();
-}
+    if(disponibilidad.trim() == "Disponible"){
+        document.getElementById("titulo").innerHTML = titulo;
+        document.getElementById("subject").value = titulo;
+        document.getElementById("creadoPor").innerHTML = "Creado por: " + creadoPor;
+        document.getElementById("fecha").innerHTML = "Fecha: " + fecha;
+        document.getElementById("descripcion").innerHTML = "Descripción: " + descripcion;
+        document.getElementById("precio").innerHTML = "Precio: $" + precio;
+        document.getElementById("amount").value = precio;
+        document.getElementById("disponibilidad").innerHTML = "Disponibilidad: " + disponibilidad;
+        document.getElementById("categoria").innerHTML = "Categoría: " + categoria;
+        document.getElementById("id").innerHTML = id;
+        document.getElementById("commerce_order").value = id;
+        document.getElementById("details").style.display = "block";
+        document.getElementById("service-boxes").style.filter = "blur(3px)";
+        blockCards();
+    }
+};
 
 function closeDetails(){
     document.getElementById("details").style.display = "none";
@@ -81,11 +82,36 @@ function updateStatus(token){
             // Maneja el error
             console.error('error');
         }
+        
     });
 }
 
 
 $(document).ready(function () {
-    // Ahora puedes usar $ normalmente
-    updateStatus();
+    var location = window.location.pathname;
+    if (location.includes("return_pay")) {
+        var user_id = document.getElementById("id").value;
+        $.ajax({
+            url: 'http://localhost:8000/Payment/last_token',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                user_id: user_id,
+            },
+    
+            success: function (data) {
+                // Maneja la respuesta exitosa del servidor
+                console.log(data);  // Muestra el objeto completo recibido
+                var token = data;  // El valor del token está directamente en 'data'
+                console.log(token);
+                updateStatus(data['token']);  // Llama a la función con el valor del token
+                console.log('Token obtenido');
+            },
+    
+            error: function (error) {
+                // Maneja el error
+                console.error('error');
+            }
+        });
+    }
 });

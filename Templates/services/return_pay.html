@@ -10,15 +10,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 {% block content %}
+    {% csrf_token %}    
     <div class="detail-card">
         <h1>Pago Exitoso</h1>
         <p>¡Gracias por tu pago! La transacción se ha completado con éxito.</p>
 
         <!-- Muestra detalles del pago -->
         <h2>Detalles del Pago:</h2>
-        <p><strong>ID de Transacción:</strong> {{ payment.order }}</p>
-        <p><strong>Monto:</strong> ${{ payment.amount }}</p>
-
+        <p><strong>Monto:</strong> $<span id="amount"></span></p>
+        <p><strong>Asunto:</strong> <span id="subject"></span></p>
+        <p><strong>Orden de Comercio:</strong> <span id="commerce_order"></span></p>
+        <input type="hidden" id="id" value="{{user.id}}" name="id">
         <!-- Puedes agregar más detalles según tus necesidades -->
 
         <!-- Enlace de regreso a la página principal u otra página relevante -->

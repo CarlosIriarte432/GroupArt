@@ -1,10 +1,14 @@
 from venv import logger
 from django.db import connection
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 import requests
 import json
 import hmac
 import hashlib
+from django.http import JsonResponse
+
+from Services.models import Service
 
 
 # Credenciales
@@ -30,7 +34,7 @@ def make_signature(params, secret_key):
 class Payment():
     def create_payment(request):
         print(request)
-        amount = int(request.POST.get('amount'))
+        amount = request.POST.get('amount')
         email = request.POST.get('email')
         subject = request.POST.get('subject')
         user_id = int(request.POST.get('id'))
@@ -55,15 +59,13 @@ class Payment():
             url_resp = jsonResp['url']
             order = str(jsonResp['flowOrder'])
             url_response = url_resp + '?token=' + token
-            #Guardar el token y el order en la base de datos
             try:
                 with connection.cursor() as cursor:
                     cursor.execute("INSERT INTO payment_payment (`order`, id_user, token) VALUES (%s, %s, %s)", (order, user_id, token))
+                    cursor.execute("UPDATE Services_service SET availability = 0, order_number = %s WHERE id = %s", (order, commerce_order))
             except Exception as e:
-                # Manejar la excepción de manera apropiada, posiblemente registrarla
-                logger.error(f"Error al insertar en la base de datos: {str(e)}")
-                # También puedes imprimir las variables order y token para depuración
-                print(f"Valores de 'order' y 'token': {order}, {token}")
+                print(f"Error en metodo create_payment de 'order' y 'token': {order}, {token}")
+                print(e)
 
         else:
             url_response = 'error_page'
@@ -91,14 +93,19 @@ class Payment():
         if status is not None:
             newStatus = int(status)
             with connection.cursor() as cursor:
-                cursor.execute("UPDATE payment SET status = %s WHERE token = %s", (newStatus, token))
-        # if status == 2:
-        #     with connection.cursor() as cursor:
-        #         cursor.execute("UPDATE payment SET status = %s WHERE token = %s", (newStatus, token))
+                cursor.execute("UPDATE payment_payment SET status = %s WHERE token = %s", (newStatus, token))
         return HttpResponse(status)
     
-    def return_last_user_token(user_id):
+    def return_last_user_token(request):
+        user_id = int(request.GET.get('user_id'))
+        token = 0
+
         with connection.cursor() as cursor:
-            cursor.execute("SELECT token FROM payment WHERE id_user = %s and status = 0 ORDER BY `order` DESC LIMIT 1", (user_id,))
-            token = cursor.fetchone()
-        return token[0]
+            cursor.execute("SELECT token FROM payment_payment WHERE id_user = %s and status = 0 ORDER BY `order` DESC LIMIT 1", [user_id])
+            result = cursor.fetchone()
+
+        if result:
+            token = result[0]
+
+        return JsonResponse({'token': token})
+    

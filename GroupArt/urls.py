@@ -22,13 +22,14 @@ from . import views
 from Users import views as Users_views
 from Services import views as Services_views
 from SocialMedia import views as SocialMedia_views
-from Services.views import ServiceCreateView  # Importación local de ServiceCreateView
+from Services.views import ServiceCreateView, update_status_service, lista_de_servicios_contratados  # Importación local de ServiceCreateView
 from Services.views import service_list  # Importación local de service_list
 from Services.views import service_detail  # Importación local de service_list
 from Services.views import lista_de_servicios  # Importación local de lista_de_servicios
 from payment.views import Payment # Importación local de create_payment
 from Services.views import return_pay # Importación local de return_pay
-from Services.views import confirm_pay # Importación local de confirm_pay
+from Services.views import confirm_pay
+from Services.views import lista_de_servicios_contratados # Importación local de confirm_pay
 # from Services.views import return_last_user_token # Importación local de return_last_user_token
 
 urlpatterns = [
@@ -49,6 +50,8 @@ urlpatterns = [
     path('services/create/', ServiceCreateView.as_view(), name='service-create'),
     path('services/', service_list, name='service-list'),
     path('my_services/', lista_de_servicios, name='lista_de_servicios'),
+    path('contracted_services/', lista_de_servicios_contratados, name='lista_de_servicios'),
+    path('cancelar_servicio/', update_status_service, name='cancelar_servicio'),
     path('services/<int:service_id>/', service_detail, name='service-detail'),
     path('editar-servicio/<int:service_id>/', Services_views.edit_service, name='edit-service'),  
     path('eliminar-servicio/<int:service_id>/', Services_views.delete_service, name='delete-service'),
@@ -57,6 +60,7 @@ urlpatterns = [
     # path('Payment/<int:amount>/<str:email>/<str:subject>/<int:commerce_order>', Payment.create_payment, name='create-payment'),
     path('Payment', Payment.create_payment, name='create-payment'),
     path('Payment/update', Payment.update_state_order, name='update-state-order'),
+    path('Payment/last_token', Payment.return_last_user_token, name='return-last-user-token'),
     path('services/return_pay', return_pay, name='return-pay'),
     path('services/confirm_pay', confirm_pay, name='confirm-pay'),
     # path('services/', return_last_user_token, name='return-last-user-token'),
