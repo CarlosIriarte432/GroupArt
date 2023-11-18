@@ -1,3 +1,5 @@
+
+<!-- payment -->
 {% extends 'layout.html' %}
 {% block title %} Lista de servicios  {% endblock %}
 {% load static %}
@@ -8,6 +10,7 @@
 
 
 {% block content %}
+    {% csrf_token %}    
     <div class="services-box" id="service-boxes">
         <h1>Lista de Servicios Disponibles</h1>
         <form method="get" action="{% url 'service-list' %}">
@@ -16,26 +19,27 @@
         </form>
         <div class="service-cards">
             {% for service in services %}
-                <div class="service-card">
-                    <div class="options">
-                        {% if service.created_by == request.user.userprofile %}
-                            <a href="{% url 'edit-service' service.id %}" class="edit-icon"><i class="fas fa-edit"></i></a>
-                            <a href="{% url 'delete-service' service.id %}" class="delete-icon"><i class="fas fa-trash-alt"></i></a>
-                        {% else %}
-                            <span class="edit-icon disabled"><i class=""></i></span>
-                            <span class="delete-icon disabled"><i class=""></i></span>
-                        {% endif %}
-                    </div>
-                
-                    {% comment %} <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>              {% endcomment %}
-                    <h2><a onClick="showDetails('{{ service.title }}', '{{ service.created_by.full_name }}', '{{ service.date }}', '{{ service.description }}', '{{ service.price }}', '{% if service.availability %} Disponible {% else %} No Disponible {% endif %}', '{{ service.category.category_name }}', '{{ service.status.status_name }}')">{{ service.title }}</a></h2>             
-                    <p>Creado por: {{ service.created_by.full_name }}</p>
-                    <p>Fecha: {{ service.date }}</p>
-                    <p>Precio estimado: ${{ service.price }}</p>
-                    <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
-                    <p>Categoría: {{ service.category.category_name }}</p>
+                {% if service.availability == 1 and service.user_id != user.id%}
+                    <div class="service-card">
+                        <div class="options">
+                            {% if service.created_by == request.user.userprofile %}
+                                <a href="{% url 'edit-service' service.id %}" class="edit-icon"><i class="fas fa-edit"></i></a>
+                                <a href="{% url 'delete-service' service.id %}" class="delete-icon"><i class="fas fa-trash-alt"></i></a>
+                            {% else %}
+                                <span class="edit-icon disabled"><i class=""></i></span>
+                                <span class="delete-icon disabled"><i class=""></i></span>
+                            {% endif %}
+                        </div>
                     
-                </div>
+                        {% comment %} <h2><a href="{% url 'service-detail' service.id %}">{{ service.title }}</a></h2>              {% endcomment %}
+                        <h2><a onClick="showDetails('{{ service.title }}', '{{ service.created_by.full_name }}', '{{ service.date }}', '{{ service.description }}', '{{ service.price }}', '{% if service.availability %} Disponible {% else %} No Disponible {% endif %}', '{{ service.category.category_name }}', '{{ service.status.status_name }}', {{service.id}})">{{ service.title }}</a></h2>             
+                        <p>Creado por: {{ service.created_by.full_name }}</p>
+                        <p>Fecha: {{ service.date }}</p>
+                        <p>Precio estimado: ${{ service.price }}</p>
+                        <p>Disponibilidad: {% if service.availability %} Disponible {% else %} No Disponible {% endif %}</p>
+                        <p>Categoría: {{ service.category.category_name }}</p>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         
@@ -44,7 +48,9 @@
 
     <div class="detail-card" style="display:none" id="details">
       <h1>Detalles del Servicio</h1>
+
       <h2 id="titulo"></h2>
+      <p id ="id" hidden> </p>
       <p id="creadoPor"></p>
       <p id="fecha"></p>
       <p id="descripcion"></p>
@@ -52,7 +58,15 @@
       <p id ="disponibilidad"></p>
       <p id="categoria"></p>
       <p id="estado"></p>
-      <button onclick="window.location.href='https://www.flow.cl/btn.php?token=i1qhrvm'">Contratar</button>
+        <form method="post" action="{% url 'create-payment'%}">
+            {% csrf_token %}
+            <input type="hidden" id="amount" name="amount">
+            <input type="hidden" id="subject" name="subject">
+            <input type="hidden" id="commerce_order" name="commerce_order">
+            <input type="hidden" id="email" value="{{user.email}}" name="email">
+            <input type="hidden" id="id_user" value="{{user.id}}" name="id">
+            <button type="submit">Contratar</button>  
+            </form>
       <button onclick="closeDetails()">Cerrar</button>
     </div>
 {% endblock %}

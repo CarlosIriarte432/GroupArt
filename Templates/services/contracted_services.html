@@ -1,0 +1,38 @@
+<!-- templates/services_list.html -->
+{% extends 'layout.html' %}
+{% block title %} Lista de Servicios Contratados {% endblock %}
+{% load static %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="services-box" id="service-boxes">
+        <h1>Lista de Servicios Contratados</h1>
+        <div class="service-cards">
+            {% for servicio_contratado in servicios_contratados %}
+                <div class="service-card">
+                    <form method="post" action="{% url 'cancelar_servicio'%}">
+                        {% csrf_token %}
+                        <h2>{{ servicio_contratado.title }}</h2>
+                        <p>Creado por: {{ servicio_contratado.full_name}}</p>
+                        <p>Fecha: {{ servicio_contratado.date }}</p>
+                        <p>Precio estimado: ${{ servicio_contratado.price }}</p>
+                        <p>Estado de Pago: {{ servicio_contratado.payment_status }}</p>
+                        {% if servicio_contratado.status_id == 1  %}
+                            <input type="hidden" value="cancel" id="action" name="action"/>
+                            <input type="hidden" value="{{servicio_contratado.id}}" id="commerce_order" name="commerce_order"/>
+                            <button type="submit">Cancelar Servicio</button>
+                            <button type="button" onclick="location.href='https://wa.me/{{servicio_contratado.phone}}'">Contactar</button>
+                        {% elif servicio_contratado.status_id == 3 %}
+                            <p>Estado servicio: Cancelado</p>
+                        {% else %}
+                            <p>Estado servicio: Finalizado</p>
+                        {% endif %}
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
