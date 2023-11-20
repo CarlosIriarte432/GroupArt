@@ -57,14 +57,11 @@ def like_post(request, post_id):
     post = Post.objects.get(pk=post_id)
     user = request.user
 
-    # Verifica si el usuario ya le dio "Me gusta" al post
     liked = Like.objects.filter(post=post, user=user).exists()
 
     if not liked:
-        # Si el usuario no ha dado "Me gusta", crea un nuevo registro de "Me gusta"
         Like.objects.create(post=post, user=user)
     else:
-        # Si el usuario ya dio "Me gusta", puedes hacer algo aquí, como mostrar un mensaje
         pass
 
-    return redirect('wall')  # Redirige a la página del muro social
+    return redirect('wall') 

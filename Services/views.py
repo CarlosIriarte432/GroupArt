@@ -25,23 +25,19 @@ class ServiceCreateView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
 
-        # Obtenemos o creamos el UserProfile asociado al usuario actual
         user_profile, created = UserProfile.objects.get_or_create(user=self.request.user)
         
-        # Asignamos el UserProfile al campo created_by
         form.instance.created_by = user_profile
 
-        # Asignamos la fecha del formulario al objeto Service
         form.instance.date = form.cleaned_data['date']
 
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('service-list')  # Reemplaza 'service-list' con el nombre de tu URL de lista de servicios
-
+        return reverse('service-list')  
     def get_initial(self):
         initial = super().get_initial()
-        initial['date'] = date.today()  # Establece la fecha inicial en la fecha actual
+        initial['date'] = date.today()  
         return initial
 
 def service_list(request):
@@ -62,7 +58,6 @@ def service_detail(request, service_id):
 def edit_service(request, service_id):
     service = get_object_or_404(Service, id=service_id)
 
-    # Verificar si el usuario autenticado es el creador del servicio
     if service.created_by != request.user.userprofile:
         messages.error(request, "No tienes permiso para editar este servicio.")
         return redirect('service-detail', service_id)
@@ -82,7 +77,6 @@ def edit_service(request, service_id):
 def delete_service(request, service_id):
     service = get_object_or_404(Service, id=service_id)
 
-    # Verificar si el usuario autenticado es el creador del servicio
     if service.created_by != request.user.userprofile:
         messages.error(request, "No tienes permiso para eliminar este servicio.")
         return redirect('service-detail', service_id)
@@ -94,18 +88,14 @@ def delete_service(request, service_id):
     return render(request, 'services/delete_service.html', {'service': service})
 
 def lista_de_servicios(request):
-    # Filtrar los servicios creados por el usuario actual
     services = Service.objects.filter(created_by=request.user.userprofile)
 
     return render(request, 'services/my_services.html', {'services': services})
 
 def lista_de_servicios_contratados(request):
-    # Verificar si el usuario está autenticado
     if request.user.is_authenticated:
-        # Obtener el ID del usuario actual
         user_id = request.user.id
 
-        # Crear la consulta SQL
         query = """
             SELECT s.title, s.description, s.price, s.date, s.order_number, s.id, s.created_by_id, s.status_id, u.full_name, u.phone,
                 CASE p.status 
@@ -121,20 +111,16 @@ def lista_de_servicios_contratados(request):
             WHERE p.id_user = %s
         """
 
-        # Ejecutar la consulta utilizando un cursor
         with connection.cursor() as cursor:
             cursor.execute(query, [user_id])
             servicios_contratados = cursor.fetchall()
 
-        # Convertir los resultados a un formato que puedas usar en tu template
         column_names = [desc[0] for desc in cursor.description]
         servicios_contratados = [dict(zip(column_names, row)) for row in servicios_contratados]
 
         return render(request, 'services/contracted_services.html', {'servicios_contratados': servicios_contratados})
     else:
-        # Manejar el caso cuando el usuario no está autenticado
-        # Puedes redirigir a una página de inicio de sesión u otra acción
-        return render(request, 'path_to_your_template/login.html')  # Ajusta esto según tu estructura de templates
+        return render(request, 'path_to_your_template/login.html')  
 
 def return_pay(request):
     return render(request, 'services/return_pay.html')

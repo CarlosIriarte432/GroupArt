@@ -100,7 +100,6 @@
 	background-color: deepskyblue;
 	color: #fff;
 	border: 2px solid #0077b6;
-	/* Cambiamos el color del borde */
 	border-radius: 22px;
 	cursor: pointer;
 	width: 20%;
@@ -119,14 +118,13 @@
 
 
 
-/* Cambia el estilo de la cuadrícula a un diseño flexible (Flexbox) */
 .social-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Espacio uniforme entre las tarjetas */
+    justify-content: space-between; 
 }
 
-/* Estilos para las tarjetas individuales */
+
 .social-card {
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -134,14 +132,12 @@
     padding: 30px;
     position: relative;
     width: 10px;
-    height: 10px; /* Calcula el ancho de cada tarjeta para que haya 3 por fila */
-    margin-bottom: 20px; /* Espacio entre las filas */
+    height: 10px; 
+    margin-bottom: 20px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Estilo para el contenedor de muro social */
 
-/* Estilo para cada publicación */
 .post {
 	background-color: rgba(0, 0, 0, 0.5);
 	border: 1px solid #ddd;
@@ -157,7 +153,6 @@
     margin: 0;
 }
 
-/* Estilo para el enlace "Crear nueva publicación" */
 .create-post-link {
     display: block;
     margin-top: 10px;
@@ -172,7 +167,6 @@
     text-decoration: none;
 }
 
-/* Posiciona los iconos en la esquina superior derecha de la cabecera */
 .edit-icon {
     margin-left: auto;
 }
@@ -377,14 +371,13 @@
 }
 
 .post {
-    /* Otros estilos para tu publicación */
-    margin-bottom: 20px; /* Espacio entre publicaciones */
-    padding-bottom: 20px; /* Espacio debajo del contenido del post */
-    border-bottom: 1px solid #ccc; /* Línea divisoria entre publicaciones */
+    margin-bottom: 20px; 
+    padding-bottom: 20px; 
+    border-bottom: 1px solid #ccc; 
 }
 
 .like-container {
-    display: flex; /* Usa flexbox para organizar los elementos */
-    justify-content: space-between; /* Espacio uniformemente entre los elementos */
-    align-items: center; /* Centra verticalmente los elementos */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
 }

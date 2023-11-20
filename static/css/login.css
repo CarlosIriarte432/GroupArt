@@ -144,9 +144,7 @@ span a {
 	text-align: center;
 	margin: 20px 0;
 	z-index: 1;
-	/* Asegura que el contenido se muestre por encima del fondo */
 	color: #a90c0c;
-	/* Cambia el color de texto */
 }
 
 .nav {
@@ -163,13 +161,11 @@ span a {
 	padding: 15px;
 	text-decoration: none;
 	color: #fff;
-	/* Cambia el color de texto */
 	transition: background-color 0.3s;
 }
 
 .nav a:hover {
 	background-color: rgba(255, 255, 255, 0.2);
-	/* Cambia el color de fondo al pasar el cursor */
 }
 
 .sidebar::before {
@@ -227,38 +223,32 @@ span a {
 	display: block;
 }
 
-/* Estilos para el menú desplegable */
 .sidebar {
-	/* Estilos anteriores del sidebar aquí */
 	transition: all 0.3s;
 }
 
 .collapsed {
 	width: 50px;
-	/* Ancho mínimo para mostrar solo los iconos */
 }
 
-/* Estilos para el botón de alternar */
 #toggleSidebar {
 	background-color: rgba(0, 0, 0, 0.5);
 	color: white;
 	border: none;
 	padding: 18px;
 	cursor: pointer;
-	align-self: flex-end; /* Alinea el botón en la parte derecha */
+	align-self: flex-end; 
 }
 .sidebar.collapsed #toggleSidebar {
-	align-self: center; /* Alinea el botón al centro en la versión minimizada */
-	text-align: center; /* Alinea el texto al centro en la versión minimizada */
+	align-self: center; 
+	text-align: center; 
   }
 
-/* Estilos para ocultar el logo en la versión minimizada */
 .sidebar.collapsed #logo-img {
 	display: none;
 }
 
 
-/* Estilos para la versión minimizada del sidebar */
 .sidebar.collapsed ul.nav li a {
 	display: flex;
 	justify-content: space-between;
@@ -266,14 +256,11 @@ span a {
 	padding: 10px;
 }
 
-/* Estilos para ocultar el texto en la versión minimizada */
 .sidebar.collapsed ul.nav li a span {
 	display: none;
-	/* Oculta todos los elementos de texto dentro del enlace */
 }
 
 
-/* Estilos para mostrar solo los iconos en la versión minimizada */
 .sidebar.collapsed ul.nav li a i {
 	display: inline;
 	/* Muestra los iconos */
@@ -379,8 +366,8 @@ span a {
 }	
 
 .custom-img-class {
-    width: 890px; /* Ajusta el ancho al 100% del contenedor */
-    height: 550px; /* Ajusta la altura automáticamente según el ancho */
+    width: 890px; 
+    height: 550px; 
 }
 
 
@@ -497,7 +484,7 @@ span a {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin: 0 auto; /* Centra horizontalmente */
+    margin: 0 auto; 
 }
 
 
@@ -600,8 +587,8 @@ span a {
 }	
 
 .custom-img-class {
-    width: 890px; /* Ajusta el ancho al 100% del contenedor */
-    height: 550px; /* Ajusta la altura automáticamente según el ancho */
+    width: 890px; 
+    height: 550px; 
 }
 
 

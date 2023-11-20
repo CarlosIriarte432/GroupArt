@@ -9,14 +9,14 @@ class ServiceForm(forms.ModelForm):
 
     availability = forms.ChoiceField(
         choices=AVAILABILITY_CHOICES,
-        widget=forms.HiddenInput,  # Utiliza HiddenInput para ocultar el campo
-        initial=True  # Establece el valor inicial en 'True' (Disponible)
+        widget=forms.HiddenInput, 
+        initial=True  
     )
 
     date = forms.DateField(
         widget=forms.HiddenInput,
-        label='Fecha',  # Cambia la etiqueta según tus necesidades
-        required=False  # Si deseas que la fecha sea opcional, establece esto en True
+        label='Fecha',  
+        required=False 
     )
 
     class Meta:
